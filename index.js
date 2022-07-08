@@ -12,5 +12,7 @@ import { DocumentPlaceholder } from "./classes/DocumentPlaceholder.js";
 export
 {
 	DocumentComponent,
+	DocumentComponent as DC,
 	DocumentPlaceholder,
+	DocumentPlaceholder as DP,
 };

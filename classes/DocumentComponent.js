@@ -86,8 +86,18 @@ export class DocumentComponent
 
 		if (this.attributes != null)
 		{
-			for (const [ name, value ] of Object.entries(this.attributes))
+			for (let [ name, value ] of Object.entries(this.attributes))
 			{
+				if (name == "className")
+				{
+					name = "class";
+				}
+
+				if (Array.isArray(value))
+				{
+					value = value.join(" ");
+				}
+
 				html += ` ${ name }="${ value }"`;
 			}
 		}
@@ -161,25 +171,3 @@ export class DocumentComponent
 		return html;
 	}
 }
-
-const template = new DocumentComponent("html", null,
-	[
-		new DocumentComponent("head", null, new DocumentPlaceholder("HEAD")),
-		new DocumentComponent("body", null, new DocumentPlaceholder("BODY")),
-	]);
-
-const html = template.render(
-	{
-		"HEAD":
-		[
-			new DocumentComponent("meta", { charset: "utf-8" }),
-
-			new DocumentComponent("title", null, "This is a test."),
-		],
-		"BODY":
-		[
-			
-		],
-	});
-
-console.log(html);
