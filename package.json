@@ -1,0 +1,25 @@
+{
+  "name": "@donutteam/document-builder",
+  "version": "0.0.1",
+  "description": "A collection of classes that make it easy to build complex HTML strings entirely with JavaScript.",
+  "main": "./index.js",
+  "scripts": {
+    "lint": "eslint . -c ./.eslintrc.cjs",
+    "lint-fix": "eslint . -c ./.eslintrc.cjs --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donutteam/document-builder.git"
+  },
+  "keywords": [
+    "html",
+    "components"
+  ],
+  "author": "Donut Team",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@donutteam/eslint-config": "^1.0.4",
+    "eslint": "^8.19.0"
+  }
+}
