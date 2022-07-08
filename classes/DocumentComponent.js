@@ -50,7 +50,7 @@ export class DocumentComponent
 	 * Constructs a new DocumentComponent;
 	 * 
 	 * @param {TagName} tagName This component's tag name.
-	 * @param {Object} [attributes] This components attributes.
+	 * @param {Object|Array<String>|String} [attributes] This components attributes. Use a string or an array of strings as a shorthand for a class attribute.
 	 * @param {Array<Child>|Child} [children] An array of child document components, strings and/or placeholders.
 	 * @author Loren Goodwin
 	 */
@@ -58,6 +58,27 @@ export class DocumentComponent
 	{
 		this.tagName = tagName;
 
+		if (attributes != null)
+		{
+			if (Array.isArray(attributes))
+			{
+				this.attributes =
+				{
+					class: attributes.join(" "),
+				};
+			}
+			else if (typeof(attributes) == "string")
+			{
+				this.attributes =
+				{
+					class: attributes,
+				};
+			}
+			else
+			{
+				this.attributes = attributes;
+			}
+		}
 		this.attributes = attributes;
 
 		if (children != null)
