@@ -2,7 +2,7 @@
 // Imports
 //
 
-import { DocumentComponent } from "./classes/DocumentComponent.js";
+import { DocumentElement } from "./classes/DocumentElement.js";
 import { DocumentPlaceholder } from "./classes/DocumentPlaceholder.js";
 
 //
@@ -11,8 +11,8 @@ import { DocumentPlaceholder } from "./classes/DocumentPlaceholder.js";
 
 export
 {
-	DocumentComponent,
-	DocumentComponent as DC,
+	DocumentElement,
+	DocumentElement as DE,
 	DocumentPlaceholder,
 	DocumentPlaceholder as DP,
 };

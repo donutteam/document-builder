@@ -13,17 +13,17 @@ import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
  */
 
 /**
- * @typedef {DocumentComponent|DocumentPlaceholder|String} Child
+ * @typedef {DocumentElement|DocumentPlaceholder|String} Child
  */
 
 /**
- * @typedef {Object.<DocumentComponent>} Replacements
+ * @typedef {Object.<DocumentElement>} Replacements
  */
 
 /**
  * A class that creates a render-able component.
  */
-export class DocumentComponent
+export class DocumentElement
 {
 	/**
 	 * A list of all void tag names that cannot have children.
@@ -65,12 +65,12 @@ export class DocumentComponent
 	/**
 	 * An array of child document components, strings and/or block placeholders.
 	 * 
-	 * @type {Array<DocumentComponent|String>}
+	 * @type {Array<DocumentElement|String>}
 	 */
 	children = null;
 
 	/**
-	 * Constructs a new DocumentComponent;
+	 * Constructs a new DocumentElement;
 	 * 
 	 * @param {TagName} tagName This component's tag name.
 	 * @param {Object|Array<String>|String} [attributes] This components attributes. Use a string or an array of strings as a shorthand for a class attribute.
@@ -147,7 +147,7 @@ export class DocumentComponent
 
 		html += `>`;
 
-		if (DocumentComponent.voidTagNames.indexOf(this.tagName) != -1)
+		if (DocumentElement.voidTagNames.indexOf(this.tagName) != -1)
 		{
 			return html;
 		}
@@ -192,7 +192,7 @@ export class DocumentComponent
 	{
 		let html = "";
 
-		if (child instanceof DocumentComponent)
+		if (child instanceof DocumentElement)
 		{
 			html += child.render(replacements);
 		}
@@ -223,9 +223,9 @@ export class DocumentComponent
 		}
 		else
 		{
-			console.error("[DocumentComponent] Invalid child:", child);
+			console.error("[DocumentElement] Invalid child:", child);
 
-			throw new Error("[DocumentComponent] Invalid child:", child);
+			throw new Error("[DocumentElement] Invalid child:", child);
 		}
 
 		return html;
