@@ -211,9 +211,9 @@ export class DocumentComponent
 		}
 		else if(typeof(child) == "function")
 		{
-			const children = child();
+			const child = child();
 
-			html += this.renderChildren(children);
+			html += this.renderChild(child);
 		}
 		else if(typeof(child) == "string")
 		{
