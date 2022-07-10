@@ -205,6 +205,12 @@ export class DocumentComponent
 				html += this.renderChildren(replacement);
 			}
 		}
+		else if(typeof(child) == "function")
+		{
+			const children = child();
+
+			html += this.renderChildren(children);
+		}
 		else if(typeof(child) == "string")
 		{
 			html += child;
