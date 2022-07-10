@@ -211,13 +211,15 @@ export class DocumentComponent
 		}
 		else if(typeof(child) == "function")
 		{
-			const child = child();
-
-			html += this.renderChild(child);
+			html += this.renderChild(child());
 		}
 		else if(typeof(child) == "string")
 		{
 			html += child;
+		}
+		else if (child == null)
+		{
+			return html;
 		}
 		else
 		{
