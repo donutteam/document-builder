@@ -26,6 +26,29 @@ import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
 export class DocumentComponent
 {
 	/**
+	 * A list of all void tag names that cannot have children.
+	 * 
+	 * @type {Array<String>}
+	 */
+	static voidTagNames =
+		[
+			"area",
+			"base",
+			"br",
+			"col",
+			"embed",
+			"hr",
+			"img",
+			"input",
+			"link",
+			"meta",
+			"param",
+			"source",
+			"track",
+			"wbr",
+		];
+
+	/**
 	 * This component's tag name.
 	 * 
 	 * @type {TagName}
@@ -124,6 +147,11 @@ export class DocumentComponent
 		}
 
 		html += `>`;
+
+		if (DocumentComponent.voidTagNames.indexOf(this.tagName) != -1)
+		{
+			return html;
+		}
 
 		if (this.children != null)
 		{
