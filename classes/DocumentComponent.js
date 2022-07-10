@@ -102,7 +102,6 @@ export class DocumentComponent
 				this.attributes = attributes;
 			}
 		}
-		this.attributes = attributes;
 
 		if (children != null)
 		{
