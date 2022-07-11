@@ -2,7 +2,9 @@
 // Imports
 //
 
-import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
+/**
+ * @typedef {import("./DocumentPlaceholder.js").DocumentPlaceholder} DocumentPlaceholder
+ */
 
 //
 // Class
@@ -197,11 +199,23 @@ export class DocumentElement
 	{
 		let html = "";
 
-		if (child instanceof DocumentElement)
+		if (child == null)
+		{
+			return html;
+		}
+
+		/**
+		 * @note This is safer to use than instanceof because there MIGHT be multiple
+		 * 	copies of this module in certain instances and instanceof breaks down in
+		 *  those cases
+		 */
+		const prototypeName = Object.getPrototypeOf(child).constructor.name;
+
+		if (prototypeName == "DocumentElement")
 		{
 			html += child.render(replacements);
 		}
-		else if(child instanceof DocumentPlaceholder)
+		else if(prototypeName == "DocumentPlaceholder")
 		{
 			const replacement = replacements[child.name];
 
