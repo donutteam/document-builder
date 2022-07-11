@@ -70,7 +70,7 @@ export class DocumentElement
 	children = null;
 
 	/**
-	 * Constructs a new DocumentElement;
+	 * Constructs a new DocumentElement.
 	 * 
 	 * @param {TagName} tagName This component's tag name.
 	 * @param {Object|Array<String>|String} [attributes] This components attributes. Use a string or an array of strings as a shorthand for a class attribute.
@@ -134,6 +134,11 @@ export class DocumentElement
 				if (name == "className")
 				{
 					name = "class";
+				}
+
+				if (value == null)
+				{
+					continue;
 				}
 
 				if (Array.isArray(value))
