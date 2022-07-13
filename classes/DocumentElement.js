@@ -226,11 +226,11 @@ export class DocumentElement
 		}
 		else if(Array.isArray(child))
 		{
-			html += this.renderChildren(child);
+			html += this.renderChildren(child, replacements);
 		}
 		else if(typeof(child) == "function")
 		{
-			html += this.renderChild(child());
+			html += this.renderChild(child(), replacements);
 		}
 		else if(typeof(child) == "string")
 		{
