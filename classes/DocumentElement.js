@@ -223,6 +223,10 @@ export class DocumentElement
 			{
 				html += this.renderChildren(replacement);
 			}
+			else if(child.defaultContents != null)
+			{
+				html += this.renderChildren(child.defaultContents);
+			}
 		}
 		else if(Array.isArray(child))
 		{
