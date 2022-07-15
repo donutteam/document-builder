@@ -115,10 +115,11 @@ export class DocumentElement
 	 * Renders this component to an HTML string.
 	 * 
 	 * @param {Replacements} replacements An object containing placeholder replacements.
+	 * @param {Object} [context] An object containing any dynamic values that might be relevant to rendering this component.
 	 * @returns {String} An HTML string.
 	 * @author Loren Goodwin
 	 */
-	render(replacements)
+	render(replacements, context = {})
 	{
 		let html = "";
 
@@ -161,7 +162,7 @@ export class DocumentElement
 
 		if (this.children != null)
 		{
-			html += this.renderChildren(this.children, replacements);
+			html += this.renderChildren(this.children, replacements, context);
 		}
 
 		html += `</${ this.tagName }>`;
@@ -176,13 +177,13 @@ export class DocumentElement
 	 * @param {Replacements} [replacements] An object containing placeholder replacements.
 	 * @author Loren Goodwin
 	 */
-	renderChildren(children, replacements = {})
+	renderChildren(children, replacements = {}, context = {})
 	{
 		let html = "";
 
 		for (const child of children)
 		{
-			html += this.renderChild(child, replacements);
+			html += this.renderChild(child, replacements, context);
 		}
 
 		return html;
@@ -195,7 +196,7 @@ export class DocumentElement
 	 * @param {Replacements} [replacements] An object containing placeholder replacements.
 	 * @author Loren Goodwin
 	 */
-	renderChild(child, replacements = {})
+	renderChild(child, replacements = {}, context = {})
 	{
 		let html = "";
 
@@ -213,7 +214,7 @@ export class DocumentElement
 
 		if (prototypeName == "DocumentElement")
 		{
-			html += child.render(replacements);
+			html += child.render(replacements, context);
 		}
 		else if(prototypeName == "DocumentPlaceholder")
 		{
@@ -221,16 +222,16 @@ export class DocumentElement
 
 			if (replacement != null)
 			{
-				html += Array.isArray(replacement) ? this.renderChildren(replacement, replacements) : this.renderChild(replacement, replacements);
+				html += Array.isArray(replacement) ? this.renderChildren(replacement, replacements, context) : this.renderChild(replacement, replacements, context);
 			}
 		}
 		else if(Array.isArray(child))
 		{
-			html += this.renderChildren(child, replacements);
+			html += this.renderChildren(child, replacements, context);
 		}
 		else if(typeof(child) == "function")
 		{
-			html += this.renderChild(child(), replacements);
+			html += this.renderChild(child(context), replacements, context);
 		}
 		else if(typeof(child) == "string")
 		{
