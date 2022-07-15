@@ -217,15 +217,11 @@ export class DocumentElement
 		}
 		else if(prototypeName == "DocumentPlaceholder")
 		{
-			const replacement = replacements[child.name];
+			const replacement = replacements[child.name] ?? child.defaultContents;
 
 			if (replacement != null)
 			{
-				html += this.renderChildren(replacement);
-			}
-			else if(child.defaultContents != null)
-			{
-				html += this.renderChildren(child.defaultContents);
+				html += Array.isArray(replacement) ? this.renderChildren(replacement, replacements) : this.renderChild(replacement, replacements);
 			}
 		}
 		else if(Array.isArray(child))
