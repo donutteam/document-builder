@@ -2,6 +2,8 @@
 // Imports
 //
 
+import htmlEntities from "html-entities";
+
 /**
  * @typedef {import("./DocumentPlaceholder.js").DocumentPlaceholder} DocumentPlaceholder
  */
@@ -146,6 +148,23 @@ export class DocumentElement
 				if (Array.isArray(value))
 				{
 					value = value.join(" ");
+				}
+
+				const prototypeName = Object.getPrototypeOf(value).constructor.name;
+
+				if (prototypeName == "DocumentPlaceholder")
+				{
+					/**
+					 * @type {Array<Child>}
+					 */
+					const children = replacements[value.name]?.children ?? value.defaultContents;
+
+					value = children
+						.map((child) =>
+						{
+							htmlEntities.encode(child.toString());
+						})
+						.join("");
 				}
 
 				html += ` ${ name }="${ value }"`;
