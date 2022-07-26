@@ -4,9 +4,7 @@
 
 import htmlEntities from "html-entities";
 
-/**
- * @typedef {import("./DocumentPlaceholder.js").DocumentPlaceholder} DocumentPlaceholder
- */
+import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
 
 //
 // Class
@@ -17,15 +15,21 @@ import htmlEntities from "html-entities";
  */
 
 /**
- * @typedef {DocumentElement|DocumentPlaceholder|String} Child
+ * @callback CallbackChild
+ * @param {Object} context Contextual information for the callback.
+ * @returns {Child|Array<Child>}
  */
 
 /**
- * @typedef {Object.<DocumentElement>} Replacements
+ * @typedef {DocumentElement|DocumentPlaceholder|String|CallbackChild} Child
  */
 
 /**
- * A class that creates a render-able component.
+ * @typedef {Object.<String, Child>} PlaceholderReplacements
+ */
+
+/**
+ * A class that creates an object hierarchy that can be rendered to HTML.
  */
 export class DocumentElement
 {
@@ -78,8 +82,7 @@ export class DocumentElement
 	 * 
 	 * @param {TagName} tagName This component's tag name.
 	 * @param {Object|Array<String>|String} [attributes] This components attributes. Use a string or an array of strings as a shorthand for a class attribute.
-	 * @param {Array<Child>|Child} [children] An array of child document components, strings and/or placeholders.
-	 * @author Loren Goodwin
+	 * @param {Array<Child>|Child} [children] An array of children.
 	 */
 	constructor(tagName, attributes, children)
 	{
@@ -114,14 +117,14 @@ export class DocumentElement
 	}
 
 	/**
-	 * Renders this component to an HTML string.
+	 * Renders this element to an HTML string.
 	 * 
-	 * @param {Replacements} replacements An object containing placeholder replacements.
-	 * @param {Object} [context] An object containing any dynamic values that might be relevant to rendering this component.
+	 * @param {Object} context An object containing any dynamic values that might be relevant to rendering this component.
+	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
 	 * @returns {String} An HTML string.
 	 * @author Loren Goodwin
 	 */
-	render(replacements, context = {})
+	async render(context = {}, placeholderReplacements = {})
 	{
 		let html = "";
 
@@ -136,6 +139,7 @@ export class DocumentElement
 		{
 			for (let [ name, value ] of Object.entries(this.attributes))
 			{
+				// Support React style className attributes
 				if (name == "className")
 				{
 					name = "class";
@@ -158,7 +162,7 @@ export class DocumentElement
 					/**
 					 * @type {Array<Child>}
 					 */
-					const children = replacements[value.name]?.children ?? value.defaultContents;
+					const children = placeholderReplacements[value.name]?.children ?? value.defaultContents;
 
 					value = children
 						.map((child) =>
@@ -174,6 +178,7 @@ export class DocumentElement
 
 		html += `>`;
 
+		// Don't close or render any children for void tags
 		if (DocumentElement.voidTagNames.indexOf(this.tagName) != -1)
 		{
 			return html;
@@ -181,7 +186,7 @@ export class DocumentElement
 
 		if (this.children != null)
 		{
-			html += this.renderChildren(this.children, replacements, context);
+			html += await this.#renderChildren(context, placeholderReplacements, this.children);
 		}
 
 		html += `</${ this.tagName }>`;
@@ -190,32 +195,34 @@ export class DocumentElement
 	}
 
 	/**
-	 * Renders an array of children components.
+	 * Renders an array of children.
 	 * 
-	 * @param {Array<Child>} children An array of children components.
-	 * @param {Replacements} [replacements] An object containing placeholder replacements.
+	 * @param {Object} context Contextual information for rendering the children.
+	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
+	 * @param {Array<Child>} children An array of children.
 	 * @author Loren Goodwin
 	 */
-	renderChildren(children, replacements = {}, context = {})
+	async #renderChildren(context = {}, placeholderReplacements = {}, children)
 	{
 		let html = "";
 
 		for (const child of children)
 		{
-			html += this.renderChild(child, replacements, context);
+			html += await this.#renderChild(context, placeholderReplacements, child);
 		}
 
 		return html;
 	}
 
 	/**
-	 * Renders a child component.
+	 * Renders a child.
 	 * 
-	 * @param {Child} child
-	 * @param {Replacements} [replacements] An object containing placeholder replacements.
+	 * @param {Object} context Contextual information for rendering the child.
+	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
+	 * @param {Child} child A child.
 	 * @author Loren Goodwin
 	 */
-	renderChild(child, replacements = {}, context = {})
+	async #renderChild(context = {}, placeholderReplacements = {}, child)
 	{
 		let html = "";
 
@@ -223,48 +230,36 @@ export class DocumentElement
 		{
 			return html;
 		}
-
-		/**
-		 * @note This is safer to use than instanceof because there MIGHT be multiple
-		 * 	copies of this module in certain instances and instanceof breaks down in
-		 *  those cases
-		 */
-		const prototypeName = Object.getPrototypeOf(child).constructor.name;
-
-		if (prototypeName == "DocumentElement")
-		{
-			html += child.render(replacements, context);
-		}
-		else if(prototypeName == "DocumentPlaceholder")
-		{
-			const replacement = replacements[child.name] ?? child.defaultContents;
-
-			if (replacement != null)
-			{
-				html += Array.isArray(replacement) ? this.renderChildren(replacement, replacements, context) : this.renderChild(replacement, replacements, context);
-			}
-		}
-		else if(Array.isArray(child))
-		{
-			html += this.renderChildren(child, replacements, context);
-		}
-		else if(typeof(child) == "function")
-		{
-			html += this.renderChild(child(context), replacements, context);
-		}
 		else if(typeof(child) == "string")
 		{
 			html += child;
 		}
-		else if (child == null)
+		else if(typeof(child) == "function")
 		{
-			return html;
+			html += await this.#renderChild(context, placeholderReplacements, child(context));
+		}
+		else if (child instanceof DocumentElement)
+		{
+			html += await child.render(context, placeholderReplacements);
+		}
+		else if(child instanceof DocumentPlaceholder)
+		{
+			const placeholderReplacement = placeholderReplacements[child.name] ?? child.defaultContents;
+
+			if (placeholderReplacement != null)
+			{
+				html += Array.isArray(placeholderReplacement) 
+					? await this.#renderChildren(context, placeholderReplacements, placeholderReplacement) 
+					: await this.#renderChild(context, placeholderReplacements, placeholderReplacement);
+			}
+		}
+		else if(Array.isArray(child))
+		{
+			html += await this.#renderChildren(context, placeholderReplacements, child);
 		}
 		else
 		{
-			console.error("[DocumentElement] Invalid child:", child);
-
-			throw new Error("[DocumentElement] Invalid child:", child);
+			console.warn("[DocumentElement] Invalid child:", child);
 		}
 
 		return html;
