@@ -1,12 +1,12 @@
 {
   "name": "@donutteam/document-builder",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "A collection of classes that make it easy to build complex HTML strings entirely with JavaScript.",
   "main": "./index.js",
   "scripts": {
     "lint": "eslint . -c ./.eslintrc.cjs",
     "lint-fix": "eslint . -c ./.eslintrc.cjs --fix",
-	"test": "mocha **/*.test.js"
+    "test": "mocha **/*.test.js"
   },
   "repository": {
     "type": "git",
