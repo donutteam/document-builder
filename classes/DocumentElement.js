@@ -234,6 +234,10 @@ export class DocumentElement
 		{
 			html += child;
 		}
+		else if (typeof(child) == "bigint" || typeof(child) == "boolean" || typeof(child) == "number")
+		{
+			html += child.toString();
+		}
 		else if(typeof(child) == "function")
 		{
 			html += await this.#renderChild(context, placeholderReplacements, child(context));
