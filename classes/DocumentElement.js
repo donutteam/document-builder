@@ -92,6 +92,8 @@ export class DocumentElement
 		{
 			if (Array.isArray(attributes))
 			{
+				attributes = attributes.filter((attribute) => attribute != null);
+
 				this.attributes =
 				{
 					class: attributes.join(" "),
