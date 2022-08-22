@@ -157,9 +157,7 @@ export class DocumentElement
 					value = value.join(" ");
 				}
 
-				const prototypeName = Object.getPrototypeOf(value).constructor.name;
-
-				if (prototypeName == "DocumentPlaceholder")
+				if (value instanceof DocumentPlaceholder)
 				{
 					/**
 					 * @type {Array<Child>}
@@ -167,10 +165,7 @@ export class DocumentElement
 					const children = placeholderReplacements[value.name]?.children ?? value.defaultContents;
 
 					value = children
-						.map((child) =>
-						{
-							htmlEntities.encode(child.toString());
-						})
+						.map((child) => htmlEntities.encode(child.toString()))
 						.join("");
 				}
 
