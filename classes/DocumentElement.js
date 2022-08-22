@@ -162,7 +162,12 @@ export class DocumentElement
 					/**
 					 * @type {Array<Child>}
 					 */
-					const children = placeholderReplacements[value.name]?.children ?? value.defaultContents;
+					let children = placeholderReplacements[value.name] ?? value.defaultContents;
+
+					if (!Array.isArray(children))
+					{
+						children = [ children ];
+					}
 
 					value = children
 						.map((child) => htmlEntities.encode(child.toString()))
