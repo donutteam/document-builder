@@ -34,6 +34,38 @@ import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
 export class DocumentElement
 {
 	/**
+	 * An object containing lists of boolean-like attributes for specific element types.
+	 * 
+	 * These attributes should NOT be included AT ALL when their values are NOT truthy.
+	 * 
+	 * @type {Object}
+	 */
+
+	static booleanAttributes =
+	{
+		form:
+		[
+			"novalidate",
+		],
+
+		input:
+		[
+			"readonly",
+			"disabled",
+			"multiple",
+			"required",
+			"autofocus",
+			"autocomplete",
+		],
+
+		option:
+		[
+			"disabled",
+			"selected",
+		],
+	};
+
+	/**
 	 * A list of all void tag names that cannot have children.
 	 * 
 	 * @type {Array<String>}
@@ -144,42 +176,53 @@ export class DocumentElement
 
 		if (this.attributes != null)
 		{
-			for (let [ name, value ] of Object.entries(this.attributes))
+			const booleanAttributes = DocumentElement.booleanAttributes[this.tagName] ?? [];
+
+			for (let [ attributeName, attributeValue ] of Object.entries(this.attributes))
 			{
+				attributeName = attributeName.toLowerCase();
+
 				// Support React style className attributes
-				if (name == "className")
+				if (attributeName == "className")
 				{
-					name = "class";
+					attributeName = "class";
 				}
 
-				if (value == null)
+				if (attributeValue == null)
 				{
 					continue;
 				}
 
-				if (Array.isArray(value))
+				const isBooleanAttribute = booleanAttributes.indexOf(attributeName) != 1;
+
+				if (!attributeValue && isBooleanAttribute)
 				{
-					value = value.join(" ");
+					continue;
 				}
 
-				if (value instanceof DocumentPlaceholder)
+				if (Array.isArray(attributeValue))
+				{
+					attributeValue = attributeValue.join(" ");
+				}
+
+				if (attributeValue instanceof DocumentPlaceholder)
 				{
 					/**
 					 * @type {Array<Child>}
 					 */
-					let children = placeholderReplacements[value.name] ?? value.defaultContents;
+					let children = placeholderReplacements[attributeValue.name] ?? attributeValue.defaultContents;
 
 					if (!Array.isArray(children))
 					{
 						children = [ children ];
 					}
 
-					value = children
+					attributeValue = children
 						.map((child) => htmlEntities.encode(child.toString()))
 						.join("");
 				}
 
-				html += ` ${ name }="${ value }"`;
+				html += ` ${ attributeName }="${ attributeValue }"`;
 			}
 		}
 
