@@ -128,6 +128,11 @@ export class DocumentElement
 	 */
 	async render(context = {}, placeholderReplacements = {})
 	{
+		if (this.tagName == null)
+		{
+			return await this.#renderChildren(context, placeholderReplacements, this.children);
+		}
+
 		let html = "";
 
 		if (this.tagName == "html")
