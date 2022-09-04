@@ -222,7 +222,12 @@ export class DocumentElement
 						.join("");
 				}
 
-				html += ` ${ attributeName }="${ attributeValue }"`;
+				html += ` ${ attributeName }`;
+
+				if (!isBooleanAttribute)
+				{
+					html += `="${ attributeValue }"`;
+				}
 			}
 		}
 
