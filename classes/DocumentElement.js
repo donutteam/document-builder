@@ -42,13 +42,13 @@ export class DocumentElement
 	 */
 
 	static booleanAttributes =
-	{
-		form:
+		{
+			form:
 		[
 			"novalidate",
 		],
 
-		input:
+			input:
 		[
 			"readonly",
 			"disabled",
@@ -58,12 +58,12 @@ export class DocumentElement
 			"autocomplete",
 		],
 
-		option:
+			option:
 		[
 			"disabled",
 			"selected",
 		],
-	};
+		};
 
 	/**
 	 * A list of all void tag names that cannot have children.
@@ -193,7 +193,7 @@ export class DocumentElement
 					continue;
 				}
 
-				const isBooleanAttribute = booleanAttributes.indexOf(attributeName) != 1;
+				const isBooleanAttribute = booleanAttributes.indexOf(attributeName) != -1;
 
 				if (!attributeValue && isBooleanAttribute)
 				{
