@@ -43,26 +43,31 @@ export class DocumentElement
 
 	static booleanAttributes =
 		{
+			details:
+			[
+				"open",
+			],
+
 			form:
-		[
-			"novalidate",
-		],
+			[
+				"novalidate",
+			],
 
 			input:
-		[
-			"readonly",
-			"disabled",
-			"multiple",
-			"required",
-			"autofocus",
-			"autocomplete",
-		],
+			[
+				"readonly",
+				"disabled",
+				"multiple",
+				"required",
+				"autofocus",
+				"autocomplete",
+			],
 
 			option:
-		[
-			"disabled",
-			"selected",
-		],
+			[
+				"disabled",
+				"selected",
+			],
 		};
 
 	/**
