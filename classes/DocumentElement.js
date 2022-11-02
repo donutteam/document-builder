@@ -61,6 +61,7 @@ export class DocumentElement
 				"required",
 				"autofocus",
 				"autocomplete",
+				"checked",
 			],
 
 			option:
