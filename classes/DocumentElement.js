@@ -69,6 +69,14 @@ export class DocumentElement
 				"disabled",
 				"selected",
 			],
+
+			select:
+			[
+				"autofocus",
+				"disabled",
+				"multiple",
+				"required",
+			],
 		};
 
 	/**
