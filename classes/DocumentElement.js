@@ -293,27 +293,25 @@ export class DocumentElement
 	 */
 	async #renderChild(context = {}, placeholderReplacements = {}, child)
 	{
-		let html = "";
-
 		if (child == null)
 		{
-			return html;
+			return "";
 		}
 		else if(typeof(child) == "string")
 		{
-			html += child;
+			return child;
 		}
 		else if (typeof(child) == "bigint" || typeof(child) == "boolean" || typeof(child) == "number")
 		{
-			html += child.toString();
+			return child.toString();
 		}
 		else if(typeof(child) == "function")
 		{
-			html += await this.#renderChild(context, placeholderReplacements, child(context));
+			return await this.#renderChild(context, placeholderReplacements, child(context));
 		}
 		else if (child instanceof DocumentElement)
 		{
-			html += await child.render(context, placeholderReplacements);
+			return await child.render(context, placeholderReplacements);
 		}
 		else if(child instanceof DocumentPlaceholder)
 		{
@@ -321,20 +319,18 @@ export class DocumentElement
 
 			if (placeholderReplacement != null)
 			{
-				html += Array.isArray(placeholderReplacement) 
+				return Array.isArray(placeholderReplacement) 
 					? await this.#renderChildren(context, placeholderReplacements, placeholderReplacement) 
 					: await this.#renderChild(context, placeholderReplacements, placeholderReplacement);
 			}
 		}
 		else if(Array.isArray(child))
 		{
-			html += await this.#renderChildren(context, placeholderReplacements, child);
+			return await this.#renderChildren(context, placeholderReplacements, child);
 		}
 		else
 		{
 			console.warn("[DocumentElement] Invalid child:", child);
 		}
-
-		return html;
 	}
 }
