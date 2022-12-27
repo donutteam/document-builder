@@ -43,9 +43,39 @@ export class DocumentElement
 
 	static booleanAttributes =
 		{
+			__global:
+			[
+				"autofocus",
+				"inert",
+			],
+
+			audio:
+			[
+				"autoplay",
+				"controls",
+				"disableremoteplayback",
+				"loop",
+				"muted",
+			],
+
+			button:
+			[
+				"disabled",
+			],
+
 			details:
 			[
 				"open",
+			],
+
+			dialog:
+			[
+				"open",
+			],
+
+			fieldset:
+			[
+				"disabled",
 			],
 
 			form:
@@ -53,15 +83,33 @@ export class DocumentElement
 				"novalidate",
 			],
 
+			img:
+			[
+				"ismap",
+			],
+
 			input:
 			[
-				"readonly",
+				"checked",
 				"disabled",
 				"multiple",
+				"readonly",
 				"required",
-				"autofocus",
-				"autocomplete",
-				"checked",
+			],
+
+			link:
+			[
+				"disabled",
+			],
+
+			ol:
+			[
+				"reversed",
+			],
+
+			optgroup:
+			[
+				"disabled",
 			],
 
 			option:
@@ -70,12 +118,47 @@ export class DocumentElement
 				"selected",
 			],
 
+			script:
+			[
+				"async",
+				"defer",
+				"nomodule",
+			],
+
 			select:
 			[
-				"autofocus",
 				"disabled",
 				"multiple",
 				"required",
+			],
+
+			textarea:
+			[
+				"disabled",
+				"readonly",
+				"required",
+			],
+
+			track:
+			[
+				"default",
+			],
+
+			ul:
+			[
+				"compact", // Deprecated
+			],
+
+			video:
+			[
+				"autoplay",
+				"autopictureinpicture",
+				"controls",
+				"disablepictureinpicture",
+				"disableremoteplayback",
+				"loop",
+				"muted",
+				"playsinline",
 			],
 		};
 
@@ -190,7 +273,12 @@ export class DocumentElement
 
 		if (this.attributes != null)
 		{
-			const booleanAttributes = DocumentElement.booleanAttributes[this.tagName] ?? [];
+			const booleanAttributes =
+			[
+				...DocumentElement.booleanAttributes["__global"],
+
+				...(DocumentElement.booleanAttributes[this.tagName] ?? []),
+			];
 
 			for (let [ attributeName, attributeValue ] of Object.entries(this.attributes))
 			{
