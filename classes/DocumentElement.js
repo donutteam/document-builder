@@ -333,12 +333,17 @@ export class DocumentElement
 			}
 		}
 
-		html += `>`;
 
 		// Don't close or render any children for void tags
 		if (DocumentElement.voidTagNames.indexOf(this.tagName) != -1)
 		{
+			html += ` />`;
+
 			return html;
+		}
+		else
+		{
+			html += `>`;
 		}
 
 		if (this.children != null)
