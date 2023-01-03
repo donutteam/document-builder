@@ -11,6 +11,8 @@ import { DocumentPlaceholder } from "./classes/DocumentPlaceholder.js";
 
 export * from "./types/Child.js";
 export * from "./types/DocumentPlaceholderReplacements.js";
+export * from "./types/ElementAttributes.js";
+export * from "./types/InputType.js";
 export * from "./types/TagName.js";
 
 export

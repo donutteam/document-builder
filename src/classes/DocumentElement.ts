@@ -8,6 +8,52 @@ import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
 
 import { Child } from "../types/Child.js";
 import { DocumentPlaceholderReplacements } from "../types/DocumentPlaceholderReplacements.js";
+import 
+{ 
+	ElementAttributes,
+	AElementAttributes, 
+	AreaElementAttributes,
+	AudioElementAttributes,
+	BaseElementAttributes,
+	BlockquoteElementAttributes,
+	ButtonElementAttributes,
+	CanvasElementAttributes,
+	ColElementAttributes,
+	ColgroupElementAttributes,
+	DelElementAttributes,
+	DetailsElementAttributes,
+	EmbedElementAttributes,
+	FieldsetElementAttributes,
+	FormElementAttributes,
+	IframeElementAttributes,
+	ImgElementAttributes,
+	InputElementAttributes,
+	InsElementAttributes,
+	LabelElementAttributes,
+	LIElementAttributes,
+	LinkElementAttributes,
+	MapElementAttributes,
+	MetaElementAttributes,
+	MeterElementAttributes,
+	ObjectElementAttributes,
+	OLElementAttributes,
+	OptgroupElementAttributes,
+	OptionElementAttributes,
+	OutputElementAttributes,
+	ParamElementAttributes,
+	ProgressElementAttributes,
+	QElementAttributes,
+	ScriptElementAttributes,
+	SelectElementAttributes,
+	SourceElementAttributes,
+	StyleElementAttributes,
+	TDElementAttributes,
+	TextareaElementAttributes,
+	THElementAttributes,
+	TimeElementAttributes,
+	TrackElementAttributes,
+	VideoElementAttributes, 
+} from "../types/ElementAttributes.js";
 import { TagName } from "../types/TagName.js";
 
 //
@@ -165,11 +211,56 @@ export class DocumentElement
 	/** This component's tag name. */
 	tagName : TagName;
 
-	/** This components attributes. */
-	attributes : object;
+	/** This component's attributes. */
+	attributes : ElementAttributes;
 
 	/** A single child or an array of child. */
 	children : Child[] = null;
+
+	constructor(tagName : "a", attributes? : AElementAttributes, children? : Child);
+	constructor(tagName : "area", attributes? : AreaElementAttributes, children? : Child);
+	constructor(tagName : "audio", attributes? : AudioElementAttributes, children? : Child);
+	constructor(tagName : "base", attributes? : BaseElementAttributes, children? : Child);
+	constructor(tagName : "blockquote", attributes? : BlockquoteElementAttributes, children? : Child);
+	constructor(tagName : "button", attributes? : ButtonElementAttributes, children? : Child);
+	constructor(tagName : "canvas", attributes? : CanvasElementAttributes, children? : Child);
+	constructor(tagName : "col", attributes? : ColElementAttributes, children? : Child);
+	constructor(tagName : "colgroup", attributes? : ColgroupElementAttributes, children? : Child);
+	constructor(tagName : "del", attributes? : DelElementAttributes, children? : Child);
+	constructor(tagName : "details", attributes? : DetailsElementAttributes, children? : Child);
+	constructor(tagName : "embed", attributes? : EmbedElementAttributes, children? : Child);
+	constructor(tagName : "fieldset", attributes? : FieldsetElementAttributes, children? : Child);
+	constructor(tagName : "form", attributes? : FormElementAttributes, children? : Child);
+	constructor(tagName : "iframe", attributes? : IframeElementAttributes, children? : Child);
+	constructor(tagName : "img", attributes? : ImgElementAttributes, children? : Child);
+	constructor(tagName : "input", attributes? : InputElementAttributes, children? : Child);
+	constructor(tagName : "ins", attributes? : InsElementAttributes, children? : Child);
+	constructor(tagName : "label", attributes? : LabelElementAttributes, children? : Child);
+	constructor(tagName : "li", attributes? : LIElementAttributes, children? : Child);
+	constructor(tagName : "link", attributes? : LinkElementAttributes, children? : Child);
+	constructor(tagName : "map", attributes? : MapElementAttributes, children? : Child);
+	constructor(tagName : "meta", attributes? : MetaElementAttributes, children? : Child);
+	constructor(tagName : "meter", attributes? : MeterElementAttributes, children? : Child);
+	constructor(tagName : "object", attributes? : ObjectElementAttributes, children? : Child);
+	constructor(tagName : "ol", attributes? : OLElementAttributes, children? : Child);
+	constructor(tagName : "optgroup", attributes? : OptgroupElementAttributes, children? : Child);
+	constructor(tagName : "option", attributes? : OptionElementAttributes, children? : Child);
+	constructor(tagName : "output", attributes? : OutputElementAttributes, children? : Child);
+	constructor(tagName : "param", attributes? : ParamElementAttributes, children? : Child);
+	constructor(tagName : "progress", attributes? : ProgressElementAttributes, children? : Child);
+	constructor(tagName : "q", attributes? : QElementAttributes, children? : Child);
+	constructor(tagName : "script", attributes? : ScriptElementAttributes, children? : Child);
+	constructor(tagName : "select", attributes? : SelectElementAttributes, children? : Child);
+	constructor(tagName : "source", attributes? : SourceElementAttributes, children? : Child);
+	constructor(tagName : "style", attributes? : StyleElementAttributes, children? : Child);
+	constructor(tagName : "td", attributes? : TDElementAttributes, children? : Child);
+	constructor(tagName : "textarea", attributes? : TextareaElementAttributes, children? : Child);
+	constructor(tagName : "th", attributes? : THElementAttributes, children? : Child);
+	constructor(tagName : "time", attributes? : TimeElementAttributes, children? : Child);
+	constructor(tagName : "track", attributes? : TrackElementAttributes, children? : Child);
+	constructor(tagName : "video", attributes? : VideoElementAttributes, children? : Child);
+
+	constructor(tagName : TagName | string, attributes? : ElementAttributes, children? : Child);
 
 	/**
 	 * Constructs a new DocumentElement.
@@ -178,9 +269,9 @@ export class DocumentElement
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName : TagName, attributes? : object | string | string[], children? : Child)
+	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | string[], children? : Child)
 	{
-		this.tagName = tagName;
+		this.tagName = tagName as TagName;
 
 		if (attributes != null)
 		{
