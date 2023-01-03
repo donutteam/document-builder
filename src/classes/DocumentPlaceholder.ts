@@ -24,7 +24,7 @@ export class DocumentPlaceholder
 	 * @param defaultContents The default contents of this placeholder if nothing replaces it. Optional.
 	 * @author Loren Goodwin
 	 */
-	constructor(name : string, defaultContents : Child)
+	constructor(name : string, defaultContents? : Child)
 	{
 		this.name = name;
 

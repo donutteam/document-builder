@@ -178,7 +178,7 @@ export class DocumentElement
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName : TagName, attributes : object | string | string[], children : Child)
+	constructor(tagName : TagName, attributes? : object | string | string[], children? : Child)
 	{
 		this.tagName = tagName;
 
@@ -220,11 +220,11 @@ export class DocumentElement
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async render(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}) : Promise<string>
+	async render(context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
 	{
 		if (this.tagName == null)
 		{
-			return await this.#renderChildren(context, placeholderReplacements, this.children);
+			return await this.#renderChildren(this.children, context, placeholderReplacements);
 		}
 
 		let html = "";
@@ -313,7 +313,7 @@ export class DocumentElement
 
 		if (this.children != null)
 		{
-			html += await this.#renderChildren(context, placeholderReplacements, this.children);
+			html += await this.#renderChildren(this.children, context, placeholderReplacements);
 		}
 
 		html += `</${ this.tagName }>`;
@@ -324,19 +324,19 @@ export class DocumentElement
 	/**
 	 * Renders an array of children.
 	 * 
+	 * @param children An array of children.
 	 * @param context Contextual information for rendering the children.
 	 * @param placeholderReplacements An object containing placeholder replacements.
-	 * @param children An array of children.
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}, children : Child[]) : Promise<string>
+	async #renderChildren(children : Child[], context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
 	{
 		let html = "";
 
 		for (const child of children)
 		{
-			html += await this.#renderChild(context, placeholderReplacements, child);
+			html += await this.#renderChild(child, context, placeholderReplacements);
 		}
 
 		return html;
@@ -345,13 +345,13 @@ export class DocumentElement
 	/**
 	 * Renders a child.
 	 * 
+	 * @param child A child.
 	 * @param context Contextual information for rendering the child.
 	 * @param placeholderReplacements An object containing placeholder replacements.
-	 * @param child A child.
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChild(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}, child : Child) : Promise<string>
+	async #renderChild(child : Child, context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
 	{
 		if (child == null || child == undefined)
 		{
@@ -367,7 +367,7 @@ export class DocumentElement
 		}
 		else if(typeof(child) == "function")
 		{
-			return await this.#renderChild(context, placeholderReplacements, child(context));
+			return await this.#renderChild(child(context), context, placeholderReplacements);
 		}
 		else if (child instanceof DocumentElement)
 		{
@@ -383,12 +383,12 @@ export class DocumentElement
 			}
 
 			return Array.isArray(placeholderReplacement) 
-				? await this.#renderChildren(context, placeholderReplacements, placeholderReplacement) 
-				: await this.#renderChild(context, placeholderReplacements, placeholderReplacement);
+				? await this.#renderChildren(placeholderReplacement, context, placeholderReplacements) 
+				: await this.#renderChild(placeholderReplacement, context, placeholderReplacements);
 		}
 		else if(Array.isArray(child))
 		{
-			return await this.#renderChildren(context, placeholderReplacements, child);
+			return await this.#renderChildren(child, context, placeholderReplacements);
 		}
 		else
 		{
