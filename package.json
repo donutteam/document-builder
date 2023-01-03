@@ -2,11 +2,13 @@
   "name": "@donutteam/document-builder",
   "version": "2.5.1",
   "description": "A collection of classes that make it easy to build complex HTML strings entirely with JavaScript.",
-  "main": "./index.js",
+  "main": "./lib/index.js",
   "scripts": {
+    "build": "npx rimraf lib && npx tsc",
     "lint": "eslint . -c ./.eslintrc.cjs",
     "lint-fix": "eslint . -c ./.eslintrc.cjs --fix",
-    "test": "mocha **/*.test.js"
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && mocha ./tests/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -20,11 +22,12 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "html-entities": "^2.3.3"
+    "entities": "^4.4.0"
   },
   "devDependencies": {
-    "@donutteam/eslint-config": "^1.0.4",
-    "eslint": "^8.19.0",
-    "mocha": "^10.0.0"
+    "@donutteam/eslint-config": "^1.1.4",
+    "eslint": "^8.31.0",
+    "mocha": "^10.2.0",
+    "rimraf": "^3.0.2"
   }
 }

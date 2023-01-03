@@ -2,45 +2,26 @@
 // Imports
 //
 
-import htmlEntities from "html-entities";
+import { encodeHTML } from "entities";
 
 import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
 
+import { Child } from "../types/Child.js";
+import { DocumentPlaceholderReplacements } from "../types/DocumentPlaceholderReplacements.js";
+import { TagName } from "../types/TagName.js";
+
 //
-// Class
+// Exports
 //
 
-/**
- * @typedef {"a"|"abbr"|"address"|"area"|"article"|"aside"|"audio"|"b"|"base"|"bdi"|"bdo"|"blockquote"|"body"|"br"|"button"|"canvas"|"caption"|"cite"|"code"|"col"|"colgroup"|"data"|"datalist"|"dd"|"del"|"details"|"dfn"|"dialog"|"div"|"dl"|"dt"|"em"|"embed"|"fieldset"|"figcaption"|"figure"|"footer"|"form"|"h1"|"head"|"header"|"hr"|"html"|"i"|"iframe"|"img"|"input"|"ins"|"kbd"|"label"|"legend"|"li"|"link"|"main"|"map"|"mark"|"meta"|"meter"|"nav"|"noscript"|"object"|"ol"|"optgroup"|"option"|"output"|"p"|"param"|"picture"|"pre"|"progress"|"q"|"rp"|"rt"|"ruby"|"s"|"samp"|"script"|"section"|"select"|"small"|"source"|"span"|"strong"|"style"|"sub"|"summary"|"sup"|"svg"|"table"|"tbody"|"td"|"template"|"textarea"|"tfoot"|"th"|"thead"|"time"|"title"|"tr"|"track"|"u"|"ul"|"var"|"video"|"wbr"} TagName
- */
-
-/**
- * @callback CallbackChild
- * @param {Object} context Contextual information for the callback.
- * @returns {Child|Array<Child>}
- */
-
-/**
- * @typedef {DocumentElement|DocumentPlaceholder|String|CallbackChild} Child
- */
-
-/**
- * @typedef {Object.<String, Child>} PlaceholderReplacements
- */
-
-/**
- * A class that creates an object hierarchy that can be rendered to HTML.
- */
+/** A class that creates an object hierarchy that can be rendered to HTML. */
 export class DocumentElement
 {
 	/**
 	 * An object containing lists of boolean-like attributes for specific element types.
 	 * 
 	 * These attributes should NOT be included AT ALL when their values are NOT truthy.
-	 * 
-	 * @type {Object}
 	 */
-
 	static booleanAttributes =
 		{
 			__global:
@@ -162,11 +143,7 @@ export class DocumentElement
 			],
 		};
 
-	/**
-	 * A list of all void tag names that cannot have children.
-	 * 
-	 * @type {Array<String>}
-	 */
+	/** A list of all void tag names that cannot have children. */
 	static voidTagNames =
 		[
 			"area",
@@ -185,35 +162,23 @@ export class DocumentElement
 			"wbr",
 		];
 
-	/**
-	 * This component's tag name.
-	 * 
-	 * @type {TagName}
-	 */
-	tagName;
+	/** This component's tag name. */
+	tagName : TagName;
 
-	/**
-	 * This components attributes.
-	 * 
-	 * @type {Object}
-	 */
-	attributes;
+	/** This components attributes. */
+	attributes : object;
 
-	/**
-	 * An array of child document components, strings and/or block placeholders.
-	 * 
-	 * @type {Array<DocumentElement|String>}
-	 */
-	children = null;
+	/** A single child or an array of child. */
+	children : Child[] = null;
 
 	/**
 	 * Constructs a new DocumentElement.
 	 * 
-	 * @param {TagName} tagName This component's tag name.
-	 * @param {Object|Array<String>|String} [attributes] This components attributes. Use a string or an array of strings as a shorthand for a class attribute.
-	 * @param {Array<Child>|Child} [children] An array of children.
+	 * @param tagName This component's tag name.
+	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
+	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName, attributes, children)
+	constructor(tagName : TagName, attributes : object | string | string[], children : Child)
 	{
 		this.tagName = tagName;
 
@@ -221,11 +186,11 @@ export class DocumentElement
 		{
 			if (Array.isArray(attributes))
 			{
-				attributes = attributes.filter((attribute) => attribute != null);
+				const cssClasses = attributes.filter((attribute) => attribute != null);
 
 				this.attributes =
 				{
-					class: attributes.join(" "),
+					class: cssClasses.join(" "),
 				};
 			}
 			else if (typeof(attributes) == "string")
@@ -250,12 +215,12 @@ export class DocumentElement
 	/**
 	 * Renders this element to an HTML string.
 	 * 
-	 * @param {Object} context An object containing any dynamic values that might be relevant to rendering this component.
-	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
-	 * @returns {String} An HTML string.
+	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
+	 * @param placeholderReplacements An object containing placeholder replacements.
+	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async render(context = {}, placeholderReplacements = {})
+	async render(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}) : Promise<string>
 	{
 		if (this.tagName == null)
 		{
@@ -320,7 +285,7 @@ export class DocumentElement
 					}
 
 					attributeValue = children
-						.map((child) => htmlEntities.encode(child.toString()))
+						.map((child) => encodeHTML(child.toString()))
 						.join("");
 				}
 
@@ -359,12 +324,13 @@ export class DocumentElement
 	/**
 	 * Renders an array of children.
 	 * 
-	 * @param {Object} context Contextual information for rendering the children.
-	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
-	 * @param {Array<Child>} children An array of children.
+	 * @param context Contextual information for rendering the children.
+	 * @param placeholderReplacements An object containing placeholder replacements.
+	 * @param children An array of children.
+	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(context = {}, placeholderReplacements = {}, children)
+	async #renderChildren(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}, children : Child[]) : Promise<string>
 	{
 		let html = "";
 
@@ -379,14 +345,15 @@ export class DocumentElement
 	/**
 	 * Renders a child.
 	 * 
-	 * @param {Object} context Contextual information for rendering the child.
-	 * @param {PlaceholderReplacements} placeholderReplacements An object containing placeholder replacements.
-	 * @param {Child} child A child.
+	 * @param context Contextual information for rendering the child.
+	 * @param placeholderReplacements An object containing placeholder replacements.
+	 * @param child A child.
+	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChild(context = {}, placeholderReplacements = {}, child)
+	async #renderChild(context : object = {}, placeholderReplacements : DocumentPlaceholderReplacements = {}, child : Child) : Promise<string>
 	{
-		if (child == null)
+		if (child == null || child == undefined)
 		{
 			return "";
 		}
@@ -410,12 +377,14 @@ export class DocumentElement
 		{
 			const placeholderReplacement = placeholderReplacements[child.name] ?? child.defaultContents;
 
-			if (placeholderReplacement != null)
+			if (placeholderReplacement == null || placeholderReplacement == undefined)
 			{
-				return Array.isArray(placeholderReplacement) 
-					? await this.#renderChildren(context, placeholderReplacements, placeholderReplacement) 
-					: await this.#renderChild(context, placeholderReplacements, placeholderReplacement);
+				return "";
 			}
+
+			return Array.isArray(placeholderReplacement) 
+				? await this.#renderChildren(context, placeholderReplacements, placeholderReplacement) 
+				: await this.#renderChild(context, placeholderReplacements, placeholderReplacement);
 		}
 		else if(Array.isArray(child))
 		{

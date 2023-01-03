@@ -4,7 +4,7 @@
 
 import assert from "node:assert";
 
-import { DE, DP } from "./../index.js";
+import { DE, DP } from "./../../lib/index.js";
 
 //
 // Tests
@@ -91,7 +91,7 @@ describe("Rendering tests", async function()
 
 		const html = await element.render();
 
-		assert.strictEqual(html, `<img src="${ src }" alt="${ alt }">`);
+		assert.strictEqual(html, `<img src="${ src }" alt="${ alt }" />`);
 	});
 
 	it("should ignore null attributes", async function()
