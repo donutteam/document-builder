@@ -359,6 +359,9 @@ export interface InputElementAttributes extends ElementAttributes
 	/** Specifies the minimum value of this input. Only for "date" and "number" inputs. */
 	min? : string;
 
+	/** Specifies the minimum length of this put. Only for "text", "email" and "password" inputs. */
+	minlength? : string;
+
 	/** When present, multiple files can be uploaded for "file" inputs. */
 	multiple? : string | boolean;
 
