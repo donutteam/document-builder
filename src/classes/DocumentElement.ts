@@ -322,6 +322,7 @@ export class DocumentElement
 				...(DocumentElement.booleanAttributes[this.tagName] ?? []),
 			];
 
+			// eslint-disable-next-line prefer-const
 			for (let [ attributeName, attributeValue ] of Object.entries(this.attributes))
 			{
 				attributeName = attributeName.toLowerCase();
@@ -336,11 +337,6 @@ export class DocumentElement
 				if (!attributeValue && isBooleanAttribute)
 				{
 					continue;
-				}
-
-				if (Array.isArray(attributeValue))
-				{
-					attributeValue = attributeValue.join(" ");
 				}
 
 				html += ` ${ attributeName }`;
