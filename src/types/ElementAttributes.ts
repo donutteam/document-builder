@@ -2,8 +2,6 @@
 // Imports
 //
 
-import { DocumentPlaceholder } from "../classes/DocumentPlaceholder.js";
-
 import { InputType } from "./InputType.js";
 
 //
@@ -51,7 +49,7 @@ export interface ElementAttributes
 	/** Specifies whether the content of the element should be translated or not. */
 	translate? : string;
 	
-	[attribute : string] : string | string[] | number | boolean | DocumentPlaceholder;
+	[attribute : string] : string | string[] | number | boolean;
 }
 
 export interface AElementAttributes extends ElementAttributes

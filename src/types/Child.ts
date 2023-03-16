@@ -3,7 +3,6 @@
 //
 
 import { DocumentElement } from "../classes/DocumentElement.js";
-import { DocumentPlaceholder } from "../classes/DocumentPlaceholder.js";
 
 //
 // Exports
@@ -17,5 +16,5 @@ export interface CallbackChild
 export type Child = 
 	CallbackChild |
 	Child[] | 
-	DocumentElement | DocumentPlaceholder |
-	string | number | boolean | BigInt;
+	DocumentElement |
+	string | number | boolean | bigint;

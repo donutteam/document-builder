@@ -4,10 +4,7 @@
 
 import { encodeHTML } from "entities";
 
-import { DocumentPlaceholder } from "./DocumentPlaceholder.js";
-
 import { Child } from "../types/Child.js";
-import { DocumentPlaceholderReplacements } from "../types/DocumentPlaceholderReplacements.js";
 import 
 { 
 	ElementAttributes,
@@ -306,15 +303,14 @@ export class DocumentElement
 	 * Renders this element to an HTML string.
 	 * 
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
-	 * @param placeholderReplacements An object containing placeholder replacements.
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async render(context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
+	async render(context? : object) : Promise<string>
 	{
 		if (this.tagName == null)
 		{
-			return await this.#renderChildren(this.children, context, placeholderReplacements);
+			return await this.#renderChildren(this.children, context);
 		}
 
 		let html = "";
@@ -362,23 +358,6 @@ export class DocumentElement
 					attributeValue = attributeValue.join(" ");
 				}
 
-				if (attributeValue instanceof DocumentPlaceholder)
-				{
-					/**
-					 * @type {Array<Child>}
-					 */
-					let children = placeholderReplacements[attributeValue.name] ?? attributeValue.defaultContents;
-
-					if (!Array.isArray(children))
-					{
-						children = [ children ];
-					}
-
-					attributeValue = children
-						.map((child) => encodeHTML(child.toString()))
-						.join("");
-				}
-
 				html += ` ${ attributeName }`;
 
 				if (!isBooleanAttribute)
@@ -403,7 +382,7 @@ export class DocumentElement
 
 		if (this.children != null)
 		{
-			html += await this.#renderChildren(this.children, context, placeholderReplacements);
+			html += await this.#renderChildren(this.children, context);
 		}
 
 		html += `</${ this.tagName }>`;
@@ -416,17 +395,16 @@ export class DocumentElement
 	 * 
 	 * @param children An array of children.
 	 * @param context Contextual information for rendering the children.
-	 * @param placeholderReplacements An object containing placeholder replacements.
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(children : Child[], context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
+	async #renderChildren(children : Child[], context? : object) : Promise<string>
 	{
 		let html = "";
 
 		for (const child of children)
 		{
-			html += await this.#renderChild(child, context, placeholderReplacements);
+			html += await this.#renderChild(child, context);
 		}
 
 		return html;
@@ -437,11 +415,10 @@ export class DocumentElement
 	 * 
 	 * @param child A child.
 	 * @param context Contextual information for rendering the child.
-	 * @param placeholderReplacements An object containing placeholder replacements.
 	 * @returns The rendered HTML string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChild(child : Child, context? : object, placeholderReplacements? : DocumentPlaceholderReplacements) : Promise<string>
+	async #renderChild(child : Child, context? : object) : Promise<string>
 	{
 		if (child == null || child == undefined)
 		{
@@ -457,28 +434,15 @@ export class DocumentElement
 		}
 		else if(typeof(child) == "function")
 		{
-			return await this.#renderChild(child(context), context, placeholderReplacements);
+			return await this.#renderChild(child(context), context);
 		}
 		else if (child instanceof DocumentElement)
 		{
-			return await child.render(context, placeholderReplacements);
-		}
-		else if(child instanceof DocumentPlaceholder)
-		{
-			const placeholderReplacement = placeholderReplacements[child.name] ?? child.defaultContents;
-
-			if (placeholderReplacement == null || placeholderReplacement == undefined)
-			{
-				return "";
-			}
-
-			return Array.isArray(placeholderReplacement) 
-				? await this.#renderChildren(placeholderReplacement, context, placeholderReplacements) 
-				: await this.#renderChild(placeholderReplacement, context, placeholderReplacements);
+			return await child.render(context);
 		}
 		else if(Array.isArray(child))
 		{
-			return await this.#renderChildren(child, context, placeholderReplacements);
+			return await this.#renderChildren(child, context);
 		}
 		else
 		{
