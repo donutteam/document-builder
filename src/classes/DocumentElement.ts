@@ -366,7 +366,7 @@ export class DocumentElement
 
 				if (!isBooleanAttribute)
 				{
-					html += `="${ encodeHTML(attributeValue) }"`;
+					html += `="${ encodeHTML(attributeValue.toString()) }"`;
 				}
 			}
 		}

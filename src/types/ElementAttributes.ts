@@ -20,13 +20,13 @@ export interface ElementAttributes
 	className? : string;
 
 	/** Specifies whether the content of an element is editable. */
-	contenteditable? : "true" | "false";
+	contenteditable? : "true" | "false" | boolean;
 
 	/** Specifies the text direction of the element's contents. */
 	dir? : "ltr" | "rtl" | "auto";
 
 	/** When present, the element is not yet, or is no longer, relevant and should not be displayed. */
-	hidden? : string;
+	hidden? : string | boolean;
 
 	/** Specifies a unique ID for the element. */
 	id? : string;
@@ -49,7 +49,7 @@ export interface ElementAttributes
 	/** Specifies whether the content of the element should be translated or not. */
 	translate? : string;
 
-	[attribute : string] : string;
+	[attribute : string] : string | number | boolean;
 }
 
 export interface AElementAttributes extends ElementAttributes
@@ -103,16 +103,16 @@ export interface AreaElementAttributes extends ElementAttributes
 export interface AudioElementAttributes extends ElementAttributes
 {
 	/** When present, the audio will start playing as soon as it can do so. */
-	autoplay? : string;
+	autoplay? : string | boolean;
 
 	/** When present, controls for the audio will be displayed. */
-	controls? : string;
+	controls? : string | boolean;
 
 	/** When present, the audio will loop endlessly. */
-	loop? : string;
+	loop? : string | boolean;
 
 	/** When present, the audio will be muted by default. */
-	muted? : string;
+	muted? : string | boolean;
 
 	/** Specifies if and how this audio should be loaded when the page loads. */
 	preload? : string;
@@ -139,10 +139,10 @@ export interface BlockquoteElementAttributes extends ElementAttributes
 export interface ButtonElementAttributes extends ElementAttributes
 {
 	/** When present, the button should automatically get focus on page load. */
-	autofocus? : string;
+	autofocus? : string | boolean;
 
 	/** When present, the button will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies the "id" of the form that this button belongs to. */
 	form? : string;
@@ -193,7 +193,7 @@ export interface DelElementAttributes extends ElementAttributes
 export interface DetailsElementAttributes extends ElementAttributes
 {
 	/** When present, the details will be opened by default. */
-	open? : string;
+	open? : string | boolean;
 }
 
 export interface EmbedElementAttributes extends ElementAttributes
@@ -214,7 +214,7 @@ export interface EmbedElementAttributes extends ElementAttributes
 export interface FieldsetElementAttributes extends ElementAttributes
 {
 	/** When present, the field set will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies the "id" of the form that this field set belongs to. */
 	form? : string;
@@ -248,7 +248,7 @@ export interface FormElementAttributes extends ElementAttributes
 	name? : string;
 
 	/** When present, the form will not be validated before submission. */
-	novalidate? : string;
+	novalidate? : string | boolean;
 
 	/** Specifies the relationship between the current document and the linked document. */
 	rel? : string;
@@ -291,7 +291,7 @@ export interface ImgElementAttributes extends ElementAttributes
 	 * 
 	 * When clicking on such an image, the click coordinates are sent to the server in the query string.
 	 */
-	ismap? : string;
+	ismap? : string | boolean;
 
 	/** Specifies the size of the linked resource. */
 	sizes? : string;
@@ -325,16 +325,16 @@ export interface InputElementAttributes extends ElementAttributes
 	autocomplete? : "on" | "off";
 
 	/** Specifies that the input should automatically get focus on page load. */
-	autofocus? : string;
+	autofocus? : string | boolean;
 
 	/** Specifies that the input should be checked on page load. Only for "checkbox" and "radio" inputs. */
-	checked? : string;
+	checked? : string | boolean;
 
 	/** Specifies that the text direction will be submitted. */
 	dirname? : string;
 
 	/** When present, the field set will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies the "id" of the form that this input belongs to. */
 	form? : string;
@@ -361,7 +361,7 @@ export interface InputElementAttributes extends ElementAttributes
 	minlength? : string;
 
 	/** When present, multiple files can be uploaded for "file" inputs. */
-	multiple? : string;
+	multiple? : string | boolean;
 
 	/** Specifies the name of the input. */
 	name? : string;
@@ -377,10 +377,10 @@ export interface InputElementAttributes extends ElementAttributes
 	placeholder? : string;
 
 	/** When present, the input is read only. */
-	readonly? : string;
+	readonly? : string | boolean;
 
 	/** When present, the input must be filled to submit the form. */
-	required? : string;
+	required? : string | boolean;
 
 	/** Specifies the width of the input in characters. */
 	size? : string;
@@ -527,7 +527,7 @@ export interface ObjectElementAttributes extends ElementAttributes
 export interface OLElementAttributes extends ElementAttributes
 {
 	/** When preent, the list will be number in reverse order. */
-	reversed? : string;
+	reversed? : string | boolean;
 
 	/** Specifies the start value of the list. */
 	start? : string;
@@ -545,13 +545,13 @@ export interface OptgroupElementAttributes extends ElementAttributes
 export interface OptionElementAttributes extends ElementAttributes
 {
 	/** When present, the option will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies a label for the option. */
 	label? : string;
 
 	/** When present, this option will be selected by default. */
-	selected? : string;
+	selected? : string | boolean;
 
 	/** The value of the option. */
 	value? : string;
@@ -600,13 +600,13 @@ export interface ScriptElementAttributes extends ElementAttributes
 	 * 
 	 * Only for external scripts.
 	 */
-	async? : string;
+	async? : string | boolean;
 
 	/** Specifies the character encoding used in the script. */
 	charset? : string;
 
 	/** When present, the script will be executed when the page has finished parsing. */
-	defer? : string;
+	defer? : string | boolean;
 
 	/** The URL of the script. */
 	src? : string;
@@ -618,22 +618,22 @@ export interface ScriptElementAttributes extends ElementAttributes
 export interface SelectElementAttributes extends ElementAttributes
 {
 	/** Specifies that the select should automatically get focus on page load. */
-	autofocus? : string;
+	autofocus? : string | boolean;
 
 	/** When present, the select will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies the "id" of the form that this select belongs to. */
 	form? : string;
 
 	/** When present, multiple options can be selected. */
-	multiple? : string;
+	multiple? : string | boolean;
 
 	/** Specifies the name of the select. */
 	name? : string;
 
 	/** When present, the user must choose an option to submit the form. */
-	required? : string;
+	required? : string | boolean;
 
 	/** Specifies the number of visible options. */
 	size? : string;
@@ -681,7 +681,7 @@ export interface TDElementAttributes extends ElementAttributes
 export interface TextareaElementAttributes extends ElementAttributes
 {
 	/** Specifies that the text area should automatically get focus on page load. */
-	autofocus? : string;
+	autofocus? : string | boolean;
 
 	/** Specifies the visible width of the text area. */
 	cols? : string;
@@ -690,7 +690,7 @@ export interface TextareaElementAttributes extends ElementAttributes
 	dirname? : string;
 
 	/** When present, the text area will be disabled. */
-	disabled? : string;
+	disabled? : string | boolean;
 
 	/** Specifies the "id" of the form that this textarea belongs to. */
 	form? : string;
@@ -702,10 +702,10 @@ export interface TextareaElementAttributes extends ElementAttributes
 	name? : string;
 
 	/** When present, the text area is read only. */
-	readonly? : string;
+	readonly? : string | boolean;
 
 	/** When present, the input text area must be filled to submit the form. */
-	required? : string;
+	required? : string | boolean;
 
 	/** Specifies the visible number of lines in the text area. */
 	rows? : string;
@@ -738,7 +738,7 @@ export interface TimeElementAttributes extends ElementAttributes
 export interface TrackElementAttributes extends ElementAttributes
 {
 	/** When present, this track will be the default if the user's preferences do not indicate that another track would be more appropriate. */
-	default? : string;
+	default? : string | boolean;
 
 	/** Specifies what kind of text track this element is. */
 	kind? : string;
@@ -756,19 +756,19 @@ export interface TrackElementAttributes extends ElementAttributes
 export interface VideoElementAttributes extends ElementAttributes
 {
 	/** When present, the video will start playing as soon as it can do so. */
-	autoplay? : string;
+	autoplay? : string | boolean;
 
 	/** When present, controls for the video will be displayed. */
-	controls? : string;
+	controls? : string | boolean;
 
 	/** Specifies the height of the video. */
 	height? : string;
 
 	/** When present, the video will loop endlessly. */
-	loop? : string;
+	loop? : string | boolean;
 
 	/** When present, the video's audio will be muted by default. */
-	muted? : string;
+	muted? : string | boolean;
 
 	/**
 	 * Specifies an image to be shown while the video is downloading, or until the user hits play. 
