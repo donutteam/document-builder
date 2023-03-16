@@ -326,12 +326,6 @@ export class DocumentElement
 			{
 				attributeName = attributeName.toLowerCase();
 
-				// Support React style className attributes
-				if (attributeName == "className")
-				{
-					attributeName = "class";
-				}
-
 				if (attributeValue == null)
 				{
 					continue;
