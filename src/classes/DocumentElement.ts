@@ -297,7 +297,7 @@ export class DocumentElement
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async render(context? : object) : Promise<string>
+	async renderToString(context? : object) : Promise<string>
 	{
 		if (this.tagName == null)
 		{
@@ -418,7 +418,7 @@ export class DocumentElement
 		}
 		else if (child instanceof DocumentElement)
 		{
-			return await child.render(context);
+			return await child.renderToString(context);
 		}
 		else if(Array.isArray(child))
 		{
