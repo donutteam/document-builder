@@ -291,6 +291,29 @@ export class DocumentElement
 	}
 
 	/**
+	 * Renders this element to an HTML element.
+	 * 
+	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
+	 * @returns The rendered element.
+	 * @author Loren Goodwin
+	 */
+	async renderToHTMLElement(context? : object) : Promise<HTMLElement>
+	{
+		if (globalThis.document == null)
+		{
+			throw new Error("Cannot render to an HTML element outside of a browser environment.");
+		}
+
+		const html = await this.renderToString(context);
+
+		const div = globalThis.document.createElement("div");
+
+		div.innerHTML = html;
+
+		return div.firstElementChild as HTMLElement;
+	}
+
+	/**
 	 * Renders this element to an HTML string.
 	 * 
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
