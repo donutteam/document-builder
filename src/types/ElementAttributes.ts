@@ -48,7 +48,7 @@ export interface ElementAttributes
 
 	/** Specifies whether the content of the element should be translated or not. */
 	translate? : string;
-	
+
 	[attribute : string] : string;
 }
 

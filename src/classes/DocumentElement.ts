@@ -294,7 +294,7 @@ export class DocumentElement
 	 * Renders this element to an HTML string.
 	 * 
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
-	 * @returns The rendered HTML string.
+	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
 	async render(context? : object) : Promise<string>
@@ -343,11 +343,10 @@ export class DocumentElement
 
 				if (!isBooleanAttribute)
 				{
-					html += `="${ attributeValue }"`;
+					html += `="${ encodeHTML(attributeValue) }"`;
 				}
 			}
 		}
-
 
 		// Don't close or render any children for void tags
 		if (DocumentElement.voidTagNames.indexOf(this.tagName) != -1)
@@ -376,7 +375,7 @@ export class DocumentElement
 	 * 
 	 * @param children An array of children.
 	 * @param context Contextual information for rendering the children.
-	 * @returns The rendered HTML string.
+	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
 	async #renderChildren(children : Child[], context? : object) : Promise<string>
@@ -396,7 +395,7 @@ export class DocumentElement
 	 * 
 	 * @param child A child.
 	 * @param context Contextual information for rendering the child.
-	 * @returns The rendered HTML string.
+	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
 	async #renderChild(child : Child, context? : object) : Promise<string>
@@ -407,7 +406,7 @@ export class DocumentElement
 		}
 		else if(typeof(child) == "string")
 		{
-			return child;
+			return encodeHTML(child);
 		}
 		else if (typeof(child) == "bigint" || typeof(child) == "boolean" || typeof(child) == "number")
 		{
@@ -424,6 +423,10 @@ export class DocumentElement
 		else if(Array.isArray(child))
 		{
 			return await this.#renderChildren(child, context);
+		}
+		else if (typeof(child) == "object" && Object.prototype.hasOwnProperty.call(child, "rawMarkup"))
+		{
+			return child.rawMarkup;
 		}
 		else
 		{
