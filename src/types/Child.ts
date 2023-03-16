@@ -10,7 +10,7 @@ import { DocumentElement } from "../classes/DocumentElement.js";
 
 export interface CallbackChild
 {
-	(context : object) : Child | Child[];
+	(context : unknown) : Child | Child[];
 }
 
 export interface RawChild

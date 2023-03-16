@@ -297,7 +297,7 @@ export class DocumentElement
 	 * @returns The rendered element.
 	 * @author Loren Goodwin
 	 */
-	async renderToHTMLElement(context? : object) : Promise<HTMLElement>
+	async renderToHTMLElement(context? : unknown) : Promise<HTMLElement>
 	{
 		if (globalThis.document == null)
 		{
@@ -320,7 +320,7 @@ export class DocumentElement
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async renderToString(context? : object) : Promise<string>
+	async renderToString(context? : unknown) : Promise<string>
 	{
 		if (this.tagName == null)
 		{
@@ -401,7 +401,7 @@ export class DocumentElement
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(children : Child[], context? : object) : Promise<string>
+	async #renderChildren(children : Child[], context? : unknown) : Promise<string>
 	{
 		let html = "";
 
@@ -421,7 +421,7 @@ export class DocumentElement
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChild(child : Child, context? : object) : Promise<string>
+	async #renderChild(child : Child, context? : unknown) : Promise<string>
 	{
 		if (child == null || child == undefined)
 		{
