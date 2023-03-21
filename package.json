@@ -25,9 +25,9 @@
     "entities": "^4.4.0"
   },
   "devDependencies": {
-    "@donutteam/eslint-config": "^1.1.4",
-    "eslint": "^8.31.0",
+    "@donutteam/eslint-config": "^2.0.0",
+    "eslint": "^8.36.0",
     "mocha": "^10.2.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^4.4.0"
   }
 }
