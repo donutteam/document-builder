@@ -16,6 +16,8 @@ export * from "./types/TagName.js";
 
 export
 {
+	DocumentElement,
 	DocumentElement as DE,
+	UnsafeDocumentElement,
 	UnsafeDocumentElement as UDE,
 };
