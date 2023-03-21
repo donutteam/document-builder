@@ -291,6 +291,17 @@ export class DocumentElement
 	}
 
 	/**
+	 * Encodes the given string.
+	 * 
+	 * @param rawString The raw string.
+	 * @returns The encoded string.
+	 */
+	encode(rawString : string) : string
+	{
+		return encodeHTML(rawString);
+	}
+
+	/**
 	 * Renders this element to an HTML element.
 	 * 
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
@@ -366,7 +377,7 @@ export class DocumentElement
 
 				if (!isBooleanAttribute)
 				{
-					html += `="${ encodeHTML(attributeValue.toString()) }"`;
+					html += `="${ this.encode(attributeValue.toString()) }"`;
 				}
 			}
 		}
@@ -429,7 +440,7 @@ export class DocumentElement
 		}
 		else if(typeof(child) == "string")
 		{
-			return encodeHTML(child);
+			return this.encode(child);
 		}
 		else if (typeof(child) == "bigint" || typeof(child) == "boolean" || typeof(child) == "number")
 		{

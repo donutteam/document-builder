@@ -3,6 +3,7 @@
 //
 
 import { DocumentElement } from "./classes/DocumentElement.js";
+import { UnsafeDocumentElement } from "./classes/UnsafeDocumentElement.js";
 
 //
 // Exports
@@ -16,4 +17,5 @@ export * from "./types/TagName.js";
 export
 {
 	DocumentElement as DE,
+	UnsafeDocumentElement as UDE,
 };
