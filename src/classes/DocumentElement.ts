@@ -256,7 +256,7 @@ export class DocumentElement
 	constructor(tagName : "time", attributes? : TimeElementAttributes, children? : Child);
 	constructor(tagName : "track", attributes? : TrackElementAttributes, children? : Child);
 	constructor(tagName : "video", attributes? : VideoElementAttributes, children? : Child);
-	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | string[], children? : Child);
+	constructor(tagName : TagName | string, attributes? : ElementAttributes | string, children? : Child);
 
 	/**
 	 * Constructs a new DocumentElement.
