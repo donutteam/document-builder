@@ -265,7 +265,7 @@ export class DocumentElement
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName : TagName | string, attributes? : ElementAttributes | string, children? : Child)
+	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child)
 	{
 		this.tagName = tagName as TagName;
 
