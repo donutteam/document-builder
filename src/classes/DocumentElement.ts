@@ -212,7 +212,7 @@ export class DocumentElement
 	attributes : ElementAttributes;
 
 	/** A single child or an array of child. */
-	children : Child[] = null;
+	children : Child[] | null = null;
 
 	constructor(tagName : "a", attributes? : AElementAttributes, children? : Child);
 	constructor(tagName : "area", attributes? : AreaElementAttributes, children? : Child);
@@ -412,9 +412,14 @@ export class DocumentElement
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(children : Child[], context? : unknown) : Promise<string>
+	async #renderChildren(children : Child[] | null, context? : unknown) : Promise<string>
 	{
 		let html = "";
+
+		if (children == null)
+		{
+			return html;
+		}
 
 		for (const child of children)
 		{
@@ -466,5 +471,7 @@ export class DocumentElement
 		{
 			console.warn("[DocumentElement] Invalid child:", child);
 		}
+
+		return "";
 	}
 }

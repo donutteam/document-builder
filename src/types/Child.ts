@@ -23,4 +23,5 @@ export type Child =
 	Child[] | 
 	RawChild |
 	DocumentElement |
-	string | number | boolean | bigint;
+	string | number | boolean | bigint |
+	null;

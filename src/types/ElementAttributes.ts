@@ -11,7 +11,7 @@ import { InputType } from "./InputType.js";
 export interface ElementAttributes
 {
 	/** Specifies a shortcut key to activate/focus an element. */
-	accesskey? : string;
+	accesskey? : string; 
 
 	/** Specifies one or more class names for the element. */
 	class? : string;
@@ -49,7 +49,7 @@ export interface ElementAttributes
 	/** Specifies whether the content of the element should be translated or not. */
 	translate? : string;
 
-	[attribute : string] : string | number | boolean;
+	[attribute : string] : string | number | boolean | undefined | null;
 }
 
 export interface AElementAttributes extends ElementAttributes
