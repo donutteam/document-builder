@@ -21,9 +21,6 @@
   "author": "Donut Team",
   "license": "MIT",
   "type": "module",
-  "dependencies": {
-    "entities": "^4.4.0"
-  },
   "devDependencies": {
     "@donutteam/eslint-config": "^2.0.0",
     "eslint": "^8.36.0",

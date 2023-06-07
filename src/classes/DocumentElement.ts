@@ -2,13 +2,11 @@
 // Imports
 //
 
-import { encodeHTML } from "entities";
-
 import { Child } from "../types/Child.js";
-import 
-{ 
+import
+{
 	ElementAttributes,
-	AElementAttributes, 
+	AElementAttributes,
 	AreaElementAttributes,
 	AudioElementAttributes,
 	BaseElementAttributes,
@@ -49,7 +47,7 @@ import
 	THElementAttributes,
 	TimeElementAttributes,
 	TrackElementAttributes,
-	VideoElementAttributes, 
+	VideoElementAttributes,
 } from "../types/ElementAttributes.js";
 import { TagName } from "../types/TagName.js";
 
@@ -62,128 +60,128 @@ export class DocumentElement
 {
 	/**
 	 * An object containing lists of boolean-like attributes for specific element types.
-	 * 
+	 *
 	 * These attributes should NOT be included AT ALL when their values are NOT truthy.
 	 */
 	static booleanAttributes =
 		{
 			__global:
-			[
-				"autofocus",
-				"inert",
-			],
+				[
+					"autofocus",
+					"inert",
+				],
 
 			audio:
-			[
-				"autoplay",
-				"controls",
-				"disableremoteplayback",
-				"loop",
-				"muted",
-			],
+				[
+					"autoplay",
+					"controls",
+					"disableremoteplayback",
+					"loop",
+					"muted",
+				],
 
 			button:
-			[
-				"disabled",
-			],
+				[
+					"disabled",
+				],
 
 			details:
-			[
-				"open",
-			],
+				[
+					"open",
+				],
 
 			dialog:
-			[
-				"open",
-			],
+				[
+					"open",
+				],
 
 			fieldset:
-			[
-				"disabled",
-			],
+				[
+					"disabled",
+				],
 
 			form:
-			[
-				"novalidate",
-			],
+				[
+					"novalidate",
+				],
 
 			img:
-			[
-				"ismap",
-			],
+				[
+					"ismap",
+				],
 
 			input:
-			[
-				"checked",
-				"disabled",
-				"multiple",
-				"readonly",
-				"required",
-			],
+				[
+					"checked",
+					"disabled",
+					"multiple",
+					"readonly",
+					"required",
+				],
 
 			link:
-			[
-				"disabled",
-			],
+				[
+					"disabled",
+				],
 
 			ol:
-			[
-				"reversed",
-			],
+				[
+					"reversed",
+				],
 
 			optgroup:
-			[
-				"disabled",
-			],
+				[
+					"disabled",
+				],
 
 			option:
-			[
-				"disabled",
-				"selected",
-			],
+				[
+					"disabled",
+					"selected",
+				],
 
 			script:
-			[
-				"async",
-				"defer",
-				"nomodule",
-			],
+				[
+					"async",
+					"defer",
+					"nomodule",
+				],
 
 			select:
-			[
-				"disabled",
-				"multiple",
-				"required",
-			],
+				[
+					"disabled",
+					"multiple",
+					"required",
+				],
 
 			textarea:
-			[
-				"disabled",
-				"readonly",
-				"required",
-			],
+				[
+					"disabled",
+					"readonly",
+					"required",
+				],
 
 			track:
-			[
-				"default",
-			],
+				[
+					"default",
+				],
 
 			ul:
-			[
-				"compact", // Deprecated
-			],
+				[
+					"compact", // Deprecated
+				],
 
 			video:
-			[
-				"autoplay",
-				"autopictureinpicture",
-				"controls",
-				"disablepictureinpicture",
-				"disableremoteplayback",
-				"loop",
-				"muted",
-				"playsinline",
-			],
+				[
+					"autoplay",
+					"autopictureinpicture",
+					"controls",
+					"disablepictureinpicture",
+					"disableremoteplayback",
+					"loop",
+					"muted",
+					"playsinline",
+				],
 		};
 
 	/** A list of all void tag names that cannot have children. */
@@ -260,7 +258,7 @@ export class DocumentElement
 
 	/**
 	 * Constructs a new DocumentElement.
-	 * 
+	 *
 	 * @param tagName This component's tag name.
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
@@ -271,12 +269,12 @@ export class DocumentElement
 
 		if (attributes != null)
 		{
-			if (typeof(attributes) == "string")
+			if (typeof (attributes) == "string")
 			{
 				this.attributes =
-				{
-					class: attributes,
-				};
+					{
+						class: attributes,
+					};
 			}
 			else
 			{
@@ -292,18 +290,40 @@ export class DocumentElement
 
 	/**
 	 * Encodes the given string.
-	 * 
+	 *
 	 * @param rawString The raw string.
 	 * @returns The encoded string.
 	 */
 	encode(rawString : string) : string
 	{
-		return encodeHTML(rawString);
+		return rawString.replace(/[<>&"']/g, (char) =>
+		{
+			switch (char)
+			{
+				case "<":
+					return "&lt;";
+
+				case ">":
+					return "&gt;";
+
+				case "&":
+					return "&amp;";
+
+				case "\"":
+					return "&quot;";
+
+				case "'":
+					return "&apos;";
+
+				default:
+					return char;
+			}
+		});
 	}
 
 	/**
 	 * Renders this element to an HTML element.
-	 * 
+	 *
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
 	 * @returns The rendered element.
 	 * @author Loren Goodwin
@@ -326,7 +346,7 @@ export class DocumentElement
 
 	/**
 	 * Renders this element to an HTML string.
-	 * 
+	 *
 	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
 	 * @returns The rendered string.
 	 * @author Loren Goodwin
@@ -350,11 +370,11 @@ export class DocumentElement
 		if (this.attributes != null)
 		{
 			const booleanAttributes =
-			[
-				...DocumentElement.booleanAttributes["__global"],
+				[
+					...DocumentElement.booleanAttributes["__global"],
 
-				...(DocumentElement.booleanAttributes[this.tagName] ?? []),
-			];
+					...(DocumentElement.booleanAttributes[this.tagName] ?? []),
+				];
 
 			// eslint-disable-next-line prefer-const
 			for (let [ attributeName, attributeValue ] of Object.entries(this.attributes))
@@ -406,7 +426,7 @@ export class DocumentElement
 
 	/**
 	 * Renders an array of children.
-	 * 
+	 *
 	 * @param children An array of children.
 	 * @param context Contextual information for rendering the children.
 	 * @returns The rendered string.
@@ -431,7 +451,7 @@ export class DocumentElement
 
 	/**
 	 * Renders a child.
-	 * 
+	 *
 	 * @param child A child.
 	 * @param context Contextual information for rendering the child.
 	 * @returns The rendered string.
@@ -443,15 +463,15 @@ export class DocumentElement
 		{
 			return "";
 		}
-		else if(typeof(child) == "string")
+		else if (typeof (child) == "string")
 		{
 			return this.encode(child);
 		}
-		else if (typeof(child) == "bigint" || typeof(child) == "boolean" || typeof(child) == "number")
+		else if (typeof (child) == "bigint" || typeof (child) == "boolean" || typeof (child) == "number")
 		{
 			return child.toString();
 		}
-		else if(typeof(child) == "function")
+		else if (typeof (child) == "function")
 		{
 			return await this.#renderChild(child(context), context);
 		}
@@ -459,11 +479,11 @@ export class DocumentElement
 		{
 			return await child.renderToString(context);
 		}
-		else if(Array.isArray(child))
+		else if (Array.isArray(child))
 		{
 			return await this.#renderChildren(child, context);
 		}
-		else if (typeof(child) == "object" && Object.prototype.hasOwnProperty.call(child, "rawMarkup"))
+		else if (typeof (child) == "object" && Object.prototype.hasOwnProperty.call(child, "rawMarkup"))
 		{
 			return child.rawMarkup;
 		}
