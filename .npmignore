@@ -4,4 +4,5 @@ tests/*
 
 .eslintignore
 .eslintrc.cjs
+.idea
 tsconfig.json
