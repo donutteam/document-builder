@@ -203,6 +203,63 @@ export class DocumentElement
 			"wbr",
 		];
 
+	static create(tagName : "a", attributes? : AElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "area", attributes? : AreaElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "audio", attributes? : AudioElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "base", attributes? : BaseElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "blockquote", attributes? : BlockquoteElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "button", attributes? : ButtonElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "canvas", attributes? : CanvasElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "col", attributes? : ColElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "colgroup", attributes? : ColgroupElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "del", attributes? : DelElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "details", attributes? : DetailsElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "embed", attributes? : EmbedElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "fieldset", attributes? : FieldsetElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "form", attributes? : FormElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "iframe", attributes? : IframeElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "img", attributes? : ImgElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "input", attributes? : InputElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "ins", attributes? : InsElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "label", attributes? : LabelElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "li", attributes? : LIElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "link", attributes? : LinkElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "map", attributes? : MapElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "meta", attributes? : MetaElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "meter", attributes? : MeterElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "object", attributes? : ObjectElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "ol", attributes? : OLElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "optgroup", attributes? : OptgroupElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "option", attributes? : OptionElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "output", attributes? : OutputElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "param", attributes? : ParamElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "progress", attributes? : ProgressElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "q", attributes? : QElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "script", attributes? : ScriptElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "select", attributes? : SelectElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "source", attributes? : SourceElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "style", attributes? : StyleElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "td", attributes? : TDElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "textarea", attributes? : TextareaElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "th", attributes? : THElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "time", attributes? : TimeElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "track", attributes? : TrackElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : "video", attributes? : VideoElementAttributes, children? : Child) : DocumentElement;
+	static create(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child) : DocumentElement;
+
+	/**
+	 * Creates a new document element.
+	 *
+	 * @param tagName This component's tag name.
+	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
+	 * @param children An array of children. Optional.
+	 * @returns A new document element.
+	 */
+	static create(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child) : DocumentElement
+	{
+		return new DocumentElement(tagName, attributes, children);
+	}
+
 	/** This component's tag name. */
 	tagName : TagName;
 
