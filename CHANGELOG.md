@@ -1,5 +1,8 @@
 # Changelog
 ## 6.0.0
+### General
+The `src` folder is now included when publishing to NPM for better developer experience and debugging.
+
 ### Dependencies
 
 - Added `@types/node` dev dependency.
