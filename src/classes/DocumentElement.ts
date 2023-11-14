@@ -63,7 +63,7 @@ export class DocumentElement
 	 *
 	 * These attributes should NOT be included AT ALL when their values are NOT truthy.
 	 */
-	static booleanAttributes =
+	static booleanAttributes : Record<string, string[]> =
 		{
 			__global:
 				[
@@ -203,63 +203,6 @@ export class DocumentElement
 			"wbr",
 		];
 
-	static create(tagName : "a", attributes? : AElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "area", attributes? : AreaElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "audio", attributes? : AudioElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "base", attributes? : BaseElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "blockquote", attributes? : BlockquoteElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "button", attributes? : ButtonElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "canvas", attributes? : CanvasElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "col", attributes? : ColElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "colgroup", attributes? : ColgroupElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "del", attributes? : DelElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "details", attributes? : DetailsElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "embed", attributes? : EmbedElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "fieldset", attributes? : FieldsetElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "form", attributes? : FormElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "iframe", attributes? : IframeElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "img", attributes? : ImgElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "input", attributes? : InputElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "ins", attributes? : InsElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "label", attributes? : LabelElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "li", attributes? : LIElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "link", attributes? : LinkElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "map", attributes? : MapElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "meta", attributes? : MetaElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "meter", attributes? : MeterElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "object", attributes? : ObjectElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "ol", attributes? : OLElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "optgroup", attributes? : OptgroupElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "option", attributes? : OptionElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "output", attributes? : OutputElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "param", attributes? : ParamElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "progress", attributes? : ProgressElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "q", attributes? : QElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "script", attributes? : ScriptElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "select", attributes? : SelectElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "source", attributes? : SourceElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "style", attributes? : StyleElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "td", attributes? : TDElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "textarea", attributes? : TextareaElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "th", attributes? : THElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "time", attributes? : TimeElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "track", attributes? : TrackElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : "video", attributes? : VideoElementAttributes, children? : Child) : DocumentElement;
-	static create(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child) : DocumentElement;
-
-	/**
-	 * Creates a new document element.
-	 *
-	 * @param tagName This component's tag name.
-	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
-	 * @param children An array of children. Optional.
-	 * @returns A new document element.
-	 */
-	static create(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child) : DocumentElement
-	{
-		return new DocumentElement(tagName, attributes, children);
-	}
-
 	/** This component's tag name. */
 	tagName : TagName;
 
@@ -381,18 +324,17 @@ export class DocumentElement
 	/**
 	 * Renders this element to an HTML element.
 	 *
-	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
-	 * @returns The rendered element.
+	 * @returns {HTMLElement} The rendered element.
 	 * @author Loren Goodwin
 	 */
-	async renderToHTMLElement(context? : unknown) : Promise<HTMLElement>
+	renderToHTMLElement() : HTMLElement
 	{
 		if (globalThis.document == null)
 		{
 			throw new Error("Cannot render to an HTML element outside of a browser environment.");
 		}
 
-		const html = await this.renderToString(context);
+		const html = this.renderToString();
 
 		const div = globalThis.document.createElement("div");
 
@@ -404,15 +346,14 @@ export class DocumentElement
 	/**
 	 * Renders this element to an HTML string.
 	 *
-	 * @param context An object containing any dynamic values that might be relevant to rendering this component.
-	 * @returns The rendered string.
+	 * @returns {string} The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async renderToString(context? : unknown) : Promise<string>
+	renderToString() : string
 	{
 		if (this.tagName == null)
 		{
-			return await this.#renderChildren(this.children, context);
+			return this.#renderChildren(this.children);
 		}
 
 		let html = "";
@@ -428,7 +369,7 @@ export class DocumentElement
 		{
 			const booleanAttributes =
 				[
-					...DocumentElement.booleanAttributes["__global"],
+					...(DocumentElement.booleanAttributes["__global"] ?? []),
 
 					...(DocumentElement.booleanAttributes[this.tagName] ?? []),
 				];
@@ -459,7 +400,7 @@ export class DocumentElement
 			}
 		}
 
-		// Don't close or render any children for void tags
+		// Close and don't render any children for void tags
 		if (DocumentElement.voidTagNames.indexOf(this.tagName) != -1)
 		{
 			html += ` />`;
@@ -473,7 +414,7 @@ export class DocumentElement
 
 		if (this.children != null)
 		{
-			html += await this.#renderChildren(this.children, context);
+			html += this.#renderChildren(this.children);
 		}
 
 		html += `</${ this.tagName }>`;
@@ -485,22 +426,21 @@ export class DocumentElement
 	 * Renders an array of children.
 	 *
 	 * @param children An array of children.
-	 * @param context Contextual information for rendering the children.
-	 * @returns The rendered string.
+	 * @returns {string} The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChildren(children : Child[] | null, context? : unknown) : Promise<string>
+	#renderChildren(children : Child[] | null) : string
 	{
-		let html = "";
-
 		if (children == null)
 		{
-			return html;
+			return "";
 		}
+
+		let html = "";
 
 		for (const child of children)
 		{
-			html += await this.#renderChild(child, context);
+			html += this.#renderChild(child);
 		}
 
 		return html;
@@ -510,13 +450,12 @@ export class DocumentElement
 	 * Renders a child.
 	 *
 	 * @param child A child.
-	 * @param context Contextual information for rendering the child.
-	 * @returns The rendered string.
+	 * @returns {string} The rendered string.
 	 * @author Loren Goodwin
 	 */
-	async #renderChild(child : Child, context? : unknown) : Promise<string>
+	#renderChild(child : Child) : string
 	{
-		if (child == null || child == undefined)
+		if (child === null || child === undefined)
 		{
 			return "";
 		}
@@ -528,17 +467,13 @@ export class DocumentElement
 		{
 			return child.toString();
 		}
-		else if (typeof (child) == "function")
-		{
-			return await this.#renderChild(child(context), context);
-		}
 		else if (child instanceof DocumentElement)
 		{
-			return await child.renderToString(context);
+			return child.renderToString();
 		}
 		else if (Array.isArray(child))
 		{
-			return await this.#renderChildren(child, context);
+			return this.#renderChildren(child);
 		}
 		else if (typeof (child) == "object" && Object.prototype.hasOwnProperty.call(child, "rawMarkup"))
 		{

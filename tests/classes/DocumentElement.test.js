@@ -4,7 +4,7 @@
 
 import assert from "node:assert";
 
-import { DE, DP } from "./../../lib/index.js";
+import { DE } from "./../../lib/index.js";
 
 //
 // Tests
@@ -16,7 +16,7 @@ describe("Rendering tests", async function()
 	{
 		const template = new DE("html");
 
-		const html = await template.render();
+		const html = template.renderToString();
 
 		assert.strictEqual(html, "<!DOCTYPE html><html></html>");
 	});
@@ -25,7 +25,7 @@ describe("Rendering tests", async function()
 	{
 		const template = new DE("html", null,
 			[
-				new DE("head", null, new DP("head")),
+				new DE("head", null),
 				new DE("body", null,
 					[
 						new DE("div"),
@@ -34,7 +34,7 @@ describe("Rendering tests", async function()
 					]),
 			]);
 
-		const html = await template.render();
+		const html = template.renderToString();
 
 		assert.strictEqual(html, "<!DOCTYPE html><html><head></head><body><div></div><span></span>A String</body></html>");
 	});
@@ -47,7 +47,7 @@ describe("Rendering tests", async function()
 				"data-test": "Test Value",
 			});
 
-		const html = await element.render();
+		const html = element.renderToString();
 
 		assert.strictEqual(html, `<div class="my-cool-class" data-test="Test Value"></div>`);
 	});
@@ -57,22 +57,9 @@ describe("Rendering tests", async function()
 		
 		const element = new DE("div", "my-cool-class");
 
-		const html = await element.render();
+		const html = element.renderToString();
 
 		assert.strictEqual(html, `<div class="my-cool-class"></div>`);
-	});
-
-	it("should support an array of strings as a shorthand for a class attribute with multiple classes", async function()
-	{
-		const element = new DE("div",
-			[
-				"my-cool-class",
-				"another-class",
-			]);
-
-		const html = await element.render();
-
-		assert.strictEqual(html, `<div class="my-cool-class another-class"></div>`);
 	});
 
 	it("should not render children for or close void tags such as img", async function()
@@ -89,7 +76,7 @@ describe("Rendering tests", async function()
 				new DE("div", null, "A child that should not be rendered!"),
 			]);
 
-		const html = await element.render();
+		const html = element.renderToString();
 
 		assert.strictEqual(html, `<img src="${ src }" alt="${ alt }" />`);
 	});
@@ -101,7 +88,7 @@ describe("Rendering tests", async function()
 				class: null,
 			});
 
-		const html = await element.render();
+		const html = element.renderToString();
 
 		assert.strictEqual(html, "<div></div>");
 	});
