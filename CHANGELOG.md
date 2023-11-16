@@ -1,4 +1,7 @@
 # Changelog
+## 6.0.1
+Updated LICENSE copyright year.
+
 ## 6.0.0
 ### General
 The `src` folder is now included when publishing to NPM for better developer experience and debugging.
