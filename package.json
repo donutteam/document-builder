@@ -5,8 +5,6 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "npx rimraf lib && npx tsc",
-    "lint": "eslint . -c ./.eslintrc.cjs",
-    "lint-fix": "eslint . -c ./.eslintrc.cjs --fix",
     "prepublishOnly": "npm run build",
     "test": "npm run build && mocha ./tests/**/*.test.js"
   },

@@ -1,6 +1,8 @@
 # Changelog
 ## 6.0.1
-Updated LICENSE copyright year.
+
+- Updated LICENSE copyright year.
+- Removed `lint` scripts from `package.json`.
 
 ## 6.0.0
 ### General
