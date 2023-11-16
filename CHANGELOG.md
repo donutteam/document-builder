@@ -3,6 +3,7 @@
 
 - Updated LICENSE copyright year.
 - Removed `lint` scripts from `package.json`.
+- Updated repo URL in `package.json`.
 
 ## 6.0.0
 ### General
