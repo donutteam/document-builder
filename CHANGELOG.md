@@ -1,12 +1,10 @@
 # Changelog
-## 6.0.2
-Fixed an unintentional change where `tagName` could not be null.
-
 ## 6.0.1
 
 - Updated LICENSE copyright year.
 - Removed `lint` scripts from `package.json`.
-- Updated repo URL in `package.json`.
+- Updated repo URL in `package.json`. 
+- Fixed an unintentional change where `tagName` could not be null.
 
 ## 6.0.0
 ### General
