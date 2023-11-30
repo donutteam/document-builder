@@ -1,4 +1,7 @@
 # Changelog
+## 6.0.2
+Fixed an unintentional change where `tagName` could not be null.
+
 ## 6.0.1
 
 - Updated LICENSE copyright year.

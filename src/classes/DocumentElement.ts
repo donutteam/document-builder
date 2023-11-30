@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 //
 // Imports
 //
@@ -204,7 +206,7 @@ export class DocumentElement
 		];
 
 	/** This component's tag name. */
-	tagName : TagName;
+	tagName : string | null;
 
 	/** This component's attributes. */
 	attributes : ElementAttributes;
@@ -255,6 +257,7 @@ export class DocumentElement
 	constructor(tagName : "track", attributes? : TrackElementAttributes, children? : Child);
 	constructor(tagName : "video", attributes? : VideoElementAttributes, children? : Child);
 	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child);
+	constructor(tagName : null, attributes : null, children? : Child);
 
 	/**
 	 * Constructs a new DocumentElement.
@@ -263,9 +266,9 @@ export class DocumentElement
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child)
+	constructor(tagName : TagName | string | null, attributes? : ElementAttributes | string | null, children? : Child)
 	{
-		this.tagName = tagName as TagName;
+		this.tagName = tagName;
 
 		if (attributes != null)
 		{
