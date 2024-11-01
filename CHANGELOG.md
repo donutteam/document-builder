@@ -1,4 +1,8 @@
 # Changelog
+## 7.0.1
+
+- fix: fixed missing type declarations
+
 ## 7.0.0
 
 - refactor: removed the `className` property from the `ElementAttributesSchema`
