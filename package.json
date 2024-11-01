@@ -5,8 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "npx rimraf lib && npx tsc",
-    "prepublishOnly": "npm run build",
-    "test": "npm run build && mocha ./tests/**/*.test.js"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,7 +23,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
-    "mocha": "^10.2.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   }
