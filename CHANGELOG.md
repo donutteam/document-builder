@@ -2,6 +2,7 @@
 ## 7.0.0
 
 - refactor: removed the `className` property from the `ElementAttributesSchema`
+- refactor: now requires `zod` to be installed as a peer dependency
 
 ## 6.1.1
 
