@@ -1,4 +1,8 @@
 # Changelog
+## 6.1.1
+
+- chore: updating packages
+
 ## 6.1.0
 
 - chore: removing .idea folder
