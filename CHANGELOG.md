@@ -1,4 +1,13 @@
 # Changelog
+## 6.1.0
+
+- chore: removing .idea folder
+- refactor: adding zod package
+- chore: removing mocha and test script
+- refactor: simplifying tsconfig
+- chore: formatting
+- refactor: adding zod schemas for everything
+
 ## 6.0.1
 
 - Updated LICENSE copyright year.
