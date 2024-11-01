@@ -15,10 +15,6 @@ export const ElementAttributesSchema = z
 		{
 			accesskey: z.string().nullish(),
 			class: z.string().nullish(),
-
-			// TODO: Remove this garbage, fuck React
-			className: z.string().nullish(),
-
 			contenteditable: z.union([ z.literal("true"), z.literal("false"), z.boolean() ]).nullish(),
 			dir: z.enum([ "ltr", "rtl", "auto" ]).nullish(),
 

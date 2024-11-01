@@ -1,4 +1,8 @@
 # Changelog
+## 7.0.0
+
+- refactor: removed the `className` property from the `ElementAttributesSchema`
+
 ## 6.1.1
 
 - chore: updating packages
