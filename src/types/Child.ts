@@ -5,7 +5,7 @@
 import { DocumentElement } from "../classes/DocumentElement.js";
 
 //
-// Exports
+// Types
 //
 
 export interface RawChild

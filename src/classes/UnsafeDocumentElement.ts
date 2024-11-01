@@ -10,7 +10,7 @@ import { DocumentElement } from "./DocumentElement.js";
 
 export class UnsafeDocumentElement extends DocumentElement
 {
-	override encode(rawString: string): string
+	encode(rawString: string)
 	{
 		return rawString;
 	}

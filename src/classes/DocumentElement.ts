@@ -1,5 +1,3 @@
-// noinspection SpellCheckingInspection
-
 //
 // Imports
 //
@@ -54,7 +52,7 @@ import
 import { TagName } from "../types/TagName.js";
 
 //
-// Exports
+// Class
 //
 
 /** A class that creates an object hierarchy that can be rendered to HTML. */
@@ -65,199 +63,101 @@ export class DocumentElement
 	 *
 	 * These attributes should NOT be included AT ALL when their values are NOT truthy.
 	 */
-	static booleanAttributes : Record<string, string[]> =
-		{
-			__global:
-				[
-					"autofocus",
-					"inert",
-				],
-
-			audio:
-				[
-					"autoplay",
-					"controls",
-					"disableremoteplayback",
-					"loop",
-					"muted",
-				],
-
-			button:
-				[
-					"disabled",
-				],
-
-			details:
-				[
-					"open",
-				],
-
-			dialog:
-				[
-					"open",
-				],
-
-			fieldset:
-				[
-					"disabled",
-				],
-
-			form:
-				[
-					"novalidate",
-				],
-
-			img:
-				[
-					"ismap",
-				],
-
-			input:
-				[
-					"checked",
-					"disabled",
-					"multiple",
-					"readonly",
-					"required",
-				],
-
-			link:
-				[
-					"disabled",
-				],
-
-			ol:
-				[
-					"reversed",
-				],
-
-			optgroup:
-				[
-					"disabled",
-				],
-
-			option:
-				[
-					"disabled",
-					"selected",
-				],
-
-			script:
-				[
-					"async",
-					"defer",
-					"nomodule",
-				],
-
-			select:
-				[
-					"disabled",
-					"multiple",
-					"required",
-				],
-
-			textarea:
-				[
-					"disabled",
-					"readonly",
-					"required",
-				],
-
-			track:
-				[
-					"default",
-				],
-
-			ul:
-				[
-					"compact", // Deprecated
-				],
-
-			video:
-				[
-					"autoplay",
-					"autopictureinpicture",
-					"controls",
-					"disablepictureinpicture",
-					"disableremoteplayback",
-					"loop",
-					"muted",
-					"playsinline",
-				],
-		};
+	static booleanAttributes: Record<string, string[]> =
+	{
+		__global: [ "autofocus", "inert" ],
+		audio: [ "autoplay", "controls", "disableremoteplayback", "loop", "muted" ],
+		button: [ "disabled" ],
+		details: [ "open" ],
+		dialog: [ "open" ],
+		fieldset: [ "disabled" ],
+		form: [ "novalidate" ],
+		img: [ "ismap" ],
+		input: [ "checked", "disabled", "multiple", "readonly", "required" ],
+		link: [ "disabled" ],
+		ol: [ "reversed" ],
+		optgroup: [ "disabled" ],
+		option: [ "disabled", "selected" ],
+		script: [ "async", "defer", "nomodule" ],
+		select: [ "disabled", "multiple", "required" ],
+		textarea: [ "disabled", "readonly", "required" ],
+		track: [ "default" ],
+		ul: [ "compact" ],
+		video: [ "autoplay", "autopictureinpicture", "controls", "disablepictureinpicture", "disableremoteplayback", "loop", "muted", "playsinline" ],
+	};
 
 	/** A list of all void tag names that cannot have children. */
 	static voidTagNames =
-		[
-			"area",
-			"base",
-			"br",
-			"col",
-			"embed",
-			"hr",
-			"img",
-			"input",
-			"link",
-			"meta",
-			"param",
-			"source",
-			"track",
-			"wbr",
-		];
+	[
+		"area",
+		"base",
+		"br",
+		"col",
+		"embed",
+		"hr",
+		"img",
+		"input",
+		"link",
+		"meta",
+		"param",
+		"source",
+		"track",
+		"wbr",
+	];
 
 	/** This component's tag name. */
-	tagName : string | null;
+	tagName: string | null;
 
 	/** This component's attributes. */
-	attributes : ElementAttributes;
+	attributes: ElementAttributes;
 
 	/** A single child or an array of child. */
-	children : Child[] | null = null;
+	children: Child[] | null;
 
-	constructor(tagName : "a", attributes? : AElementAttributes, children? : Child);
-	constructor(tagName : "area", attributes? : AreaElementAttributes, children? : Child);
-	constructor(tagName : "audio", attributes? : AudioElementAttributes, children? : Child);
-	constructor(tagName : "base", attributes? : BaseElementAttributes, children? : Child);
-	constructor(tagName : "blockquote", attributes? : BlockquoteElementAttributes, children? : Child);
-	constructor(tagName : "button", attributes? : ButtonElementAttributes, children? : Child);
-	constructor(tagName : "canvas", attributes? : CanvasElementAttributes, children? : Child);
-	constructor(tagName : "col", attributes? : ColElementAttributes, children? : Child);
-	constructor(tagName : "colgroup", attributes? : ColgroupElementAttributes, children? : Child);
-	constructor(tagName : "del", attributes? : DelElementAttributes, children? : Child);
-	constructor(tagName : "details", attributes? : DetailsElementAttributes, children? : Child);
-	constructor(tagName : "embed", attributes? : EmbedElementAttributes, children? : Child);
-	constructor(tagName : "fieldset", attributes? : FieldsetElementAttributes, children? : Child);
-	constructor(tagName : "form", attributes? : FormElementAttributes, children? : Child);
-	constructor(tagName : "iframe", attributes? : IframeElementAttributes, children? : Child);
-	constructor(tagName : "img", attributes? : ImgElementAttributes, children? : Child);
-	constructor(tagName : "input", attributes? : InputElementAttributes, children? : Child);
-	constructor(tagName : "ins", attributes? : InsElementAttributes, children? : Child);
-	constructor(tagName : "label", attributes? : LabelElementAttributes, children? : Child);
-	constructor(tagName : "li", attributes? : LIElementAttributes, children? : Child);
-	constructor(tagName : "link", attributes? : LinkElementAttributes, children? : Child);
-	constructor(tagName : "map", attributes? : MapElementAttributes, children? : Child);
-	constructor(tagName : "meta", attributes? : MetaElementAttributes, children? : Child);
-	constructor(tagName : "meter", attributes? : MeterElementAttributes, children? : Child);
-	constructor(tagName : "object", attributes? : ObjectElementAttributes, children? : Child);
-	constructor(tagName : "ol", attributes? : OLElementAttributes, children? : Child);
-	constructor(tagName : "optgroup", attributes? : OptgroupElementAttributes, children? : Child);
-	constructor(tagName : "option", attributes? : OptionElementAttributes, children? : Child);
-	constructor(tagName : "output", attributes? : OutputElementAttributes, children? : Child);
-	constructor(tagName : "param", attributes? : ParamElementAttributes, children? : Child);
-	constructor(tagName : "progress", attributes? : ProgressElementAttributes, children? : Child);
-	constructor(tagName : "q", attributes? : QElementAttributes, children? : Child);
-	constructor(tagName : "script", attributes? : ScriptElementAttributes, children? : Child);
-	constructor(tagName : "select", attributes? : SelectElementAttributes, children? : Child);
-	constructor(tagName : "source", attributes? : SourceElementAttributes, children? : Child);
-	constructor(tagName : "style", attributes? : StyleElementAttributes, children? : Child);
-	constructor(tagName : "td", attributes? : TDElementAttributes, children? : Child);
-	constructor(tagName : "textarea", attributes? : TextareaElementAttributes, children? : Child);
-	constructor(tagName : "th", attributes? : THElementAttributes, children? : Child);
-	constructor(tagName : "time", attributes? : TimeElementAttributes, children? : Child);
-	constructor(tagName : "track", attributes? : TrackElementAttributes, children? : Child);
-	constructor(tagName : "video", attributes? : VideoElementAttributes, children? : Child);
-	constructor(tagName : TagName | string, attributes? : ElementAttributes | string | null, children? : Child);
-	constructor(tagName : null, attributes : null, children? : Child);
+	constructor(tagName: "a", attributes?: AElementAttributes, children?: Child);
+	constructor(tagName: "area", attributes?: AreaElementAttributes, children?: Child);
+	constructor(tagName: "audio", attributes?: AudioElementAttributes, children?: Child);
+	constructor(tagName: "base", attributes?: BaseElementAttributes, children?: Child);
+	constructor(tagName: "blockquote", attributes?: BlockquoteElementAttributes, children?: Child);
+	constructor(tagName: "button", attributes?: ButtonElementAttributes, children?: Child);
+	constructor(tagName: "canvas", attributes?: CanvasElementAttributes, children?: Child);
+	constructor(tagName: "col", attributes?: ColElementAttributes, children?: Child);
+	constructor(tagName: "colgroup", attributes?: ColgroupElementAttributes, children?: Child);
+	constructor(tagName: "del", attributes?: DelElementAttributes, children?: Child);
+	constructor(tagName: "details", attributes?: DetailsElementAttributes, children?: Child);
+	constructor(tagName: "embed", attributes?: EmbedElementAttributes, children?: Child);
+	constructor(tagName: "fieldset", attributes?: FieldsetElementAttributes, children?: Child);
+	constructor(tagName: "form", attributes?: FormElementAttributes, children?: Child);
+	constructor(tagName: "iframe", attributes?: IframeElementAttributes, children?: Child);
+	constructor(tagName: "img", attributes?: ImgElementAttributes, children?: Child);
+	constructor(tagName: "input", attributes?: InputElementAttributes, children?: Child);
+	constructor(tagName: "ins", attributes?: InsElementAttributes, children?: Child);
+	constructor(tagName: "label", attributes?: LabelElementAttributes, children?: Child);
+	constructor(tagName: "li", attributes?: LIElementAttributes, children?: Child);
+	constructor(tagName: "link", attributes?: LinkElementAttributes, children?: Child);
+	constructor(tagName: "map", attributes?: MapElementAttributes, children?: Child);
+	constructor(tagName: "meta", attributes?: MetaElementAttributes, children?: Child);
+	constructor(tagName: "meter", attributes?: MeterElementAttributes, children?: Child);
+	constructor(tagName: "object", attributes?: ObjectElementAttributes, children?: Child);
+	constructor(tagName: "ol", attributes?: OLElementAttributes, children?: Child);
+	constructor(tagName: "optgroup", attributes?: OptgroupElementAttributes, children?: Child);
+	constructor(tagName: "option", attributes?: OptionElementAttributes, children?: Child);
+	constructor(tagName: "output", attributes?: OutputElementAttributes, children?: Child);
+	constructor(tagName: "param", attributes?: ParamElementAttributes, children?: Child);
+	constructor(tagName: "progress", attributes?: ProgressElementAttributes, children?: Child);
+	constructor(tagName: "q", attributes?: QElementAttributes, children?: Child);
+	constructor(tagName: "script", attributes?: ScriptElementAttributes, children?: Child);
+	constructor(tagName: "select", attributes?: SelectElementAttributes, children?: Child);
+	constructor(tagName: "source", attributes?: SourceElementAttributes, children?: Child);
+	constructor(tagName: "style", attributes?: StyleElementAttributes, children?: Child);
+	constructor(tagName: "td", attributes?: TDElementAttributes, children?: Child);
+	constructor(tagName: "textarea", attributes?: TextareaElementAttributes, children?: Child);
+	constructor(tagName: "th", attributes?: THElementAttributes, children?: Child);
+	constructor(tagName: "time", attributes?: TimeElementAttributes, children?: Child);
+	constructor(tagName: "track", attributes?: TrackElementAttributes, children?: Child);
+	constructor(tagName: "video", attributes?: VideoElementAttributes, children?: Child);
+	constructor(tagName: TagName | string, attributes?: ElementAttributes | string | null, children?: Child);
+	constructor(tagName: null, attributes: null, children?: Child);
 
 	/**
 	 * Constructs a new DocumentElement.
@@ -266,7 +166,7 @@ export class DocumentElement
 	 * @param attributes This components attributes. Use a string or an array of strings as a shorthand for a class attribute. Optional.
 	 * @param children An array of children. Optional.
 	 */
-	constructor(tagName : TagName | string | null, attributes? : ElementAttributes | string | null, children? : Child)
+	constructor(tagName: TagName | string | null, attributes?: ElementAttributes | string | null, children?: Child)
 	{
 		this.tagName = tagName;
 
@@ -297,7 +197,7 @@ export class DocumentElement
 	 * @param rawString The raw string.
 	 * @returns The encoded string.
 	 */
-	encode(rawString : string) : string
+	encode(rawString: string)
 	{
 		return rawString.replace(/[<>&"']/g, (char) =>
 		{
@@ -327,10 +227,9 @@ export class DocumentElement
 	/**
 	 * Renders this element to an HTML element.
 	 *
-	 * @returns {HTMLElement} The rendered element.
-	 * @author Loren Goodwin
+	 * @returns The rendered element.
 	 */
-	renderToHTMLElement() : HTMLElement
+	renderToHTMLElement()
 	{
 		if (globalThis.document == null)
 		{
@@ -349,10 +248,9 @@ export class DocumentElement
 	/**
 	 * Renders this element to an HTML string.
 	 *
-	 * @returns {string} The rendered string.
-	 * @author Loren Goodwin
+	 * @returns The rendered string.
 	 */
-	renderToString() : string
+	renderToString()
 	{
 		if (this.tagName == null)
 		{
@@ -429,10 +327,9 @@ export class DocumentElement
 	 * Renders an array of children.
 	 *
 	 * @param children An array of children.
-	 * @returns {string} The rendered string.
-	 * @author Loren Goodwin
+	 * @returns The rendered string.
 	 */
-	#renderChildren(children : Child[] | null) : string
+	#renderChildren(children: Child[] | null)
 	{
 		if (children == null)
 		{
@@ -453,10 +350,9 @@ export class DocumentElement
 	 * Renders a child.
 	 *
 	 * @param child A child.
-	 * @returns {string} The rendered string.
-	 * @author Loren Goodwin
+	 * @returns The rendered string.
 	 */
-	#renderChild(child : Child) : string
+	#renderChild(child: Child)
 	{
 		if (child === null || child === undefined)
 		{
