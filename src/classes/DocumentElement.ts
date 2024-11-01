@@ -170,14 +170,18 @@ export class DocumentElement
 	{
 		this.tagName = tagName;
 
-		if (attributes != null)
+		if (attributes == null)
+		{
+			this.attributes = {};
+		}
+		else
 		{
 			if (typeof (attributes) == "string")
 			{
 				this.attributes =
-					{
-						class: attributes,
-					};
+				{
+					class: attributes,
+				};
 			}
 			else
 			{
@@ -185,9 +189,15 @@ export class DocumentElement
 			}
 		}
 
-		if (children != null)
+		if (children == null)
 		{
-			this.children = Array.isArray(children) ? children : [ children ];
+			this.children = null;
+		}
+		else
+		{
+			this.children = Array.isArray(children) 
+				? children 
+				: [ children ];
 		}
 	}
 
