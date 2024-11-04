@@ -2,6 +2,7 @@
 ## 8.0.0
 
 - refactor: removed zod schemas from everything
+- refactor: no longer requires `zod` to be installed as a peer dependency
 
 ## 7.0.1
 
