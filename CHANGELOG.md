@@ -1,4 +1,8 @@
 # Changelog
+## 8.0.1
+
+- chore: updated @types/node
+
 ## 8.0.0
 
 - refactor: removed zod schemas from everything
