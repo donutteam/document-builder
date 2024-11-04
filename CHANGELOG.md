@@ -1,4 +1,8 @@
 # Changelog
+## 8.0.0
+
+- refactor: removed zod schemas from everything
+
 ## 7.0.1
 
 - fix: fixed missing type declarations
