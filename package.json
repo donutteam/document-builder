@@ -5,6 +5,7 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "npx rimraf build && npx tsc",
+    "build:watch": "npx rimraf lib && npx tsc --watch",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "@types/node": "^22.8.7",
     "rimraf": "^6.0.1",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@donutteam/typescript-config": "^2.0.0"
   }
 }

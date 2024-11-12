@@ -1,19 +1,15 @@
 {
+	"extends": "@donutteam/typescript-config",
 	"compilerOptions":
 	{
 		"rootDir": "./src",
 		"outDir": "./build",
 
-		"declaration": true,
 		"lib":
 		[
-			"dom",
-			"esnext",
+			"DOM",
+			"ESNext",
 		],
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"strict": true,
-		"target": "ESNext",
 	},
 	"include":
 	[
