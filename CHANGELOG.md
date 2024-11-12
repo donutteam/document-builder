@@ -1,4 +1,8 @@
 # Changelog
+## 8.0.2
+
+- refactor: extended @donutteam/typescript-config
+
 ## 8.0.1
 
 - chore: updated @types/node
