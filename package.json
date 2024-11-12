@@ -1,6 +1,6 @@
 {
   "name": "@donutteam/document-builder",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "A collection of classes that make it easy to build complex HTML strings entirely with JavaScript.",
   "main": "./build/index.js",
   "scripts": {
