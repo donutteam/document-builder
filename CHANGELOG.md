@@ -1,4 +1,8 @@
 # Changelog
+## 8.0.3
+
+- fix: moved @donutteam/typescript-config to devDependencies
+
 ## 8.0.2
 
 - refactor: extended @donutteam/typescript-config
